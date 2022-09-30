@@ -4,97 +4,97 @@ using UnityEngine.UI;
 
 public class Turret : MonoBehaviour
 {
-   // TODO Transalte every name from Italian to English
+   // TODO Transalte comments
    public LayerMask enemies;
-   public float damage, raggio, attacchiPerSecondo;
-   public int costo;  //costo per l'acquisto di una torretta
-   public int prezzoVendita;  //quante risorse vengono riborsate se la torretta viene rimossa
-   public int consumoEnergia;  //quantità di energia consumata ad ogni attacco
-   public string descrizione;
-   public GameObject testa, canna, proiettile;  //parti della torretta
-   public GameObject prossimoLivello;  //la torreta che viene sostituita al passaggio di livello
-   public int expMax; //la torretta può salire di livello al rggiungimento del valore impostato
-   public Button lvUp;
-   public GameObject barraExp;
-   public Image barra;
+   public float damage, range, attacksPerSecond;
+   public int cost;  //costo per l'acquisto di una torretta
+   public int sellPrice;  //quante risorse vengono riborsate se la torretta viene rimossa
+   public int energyConsumption;  //quantità di energia consumata ad ogni attacco
+   public string description;
+   public GameObject head, barrel, projectile;  //parti della torretta
+   public GameObject leveledUpVersion;  //la torreta che viene sostituita al passaggio di livello
+   public int maxExperience; //la torretta può salire di livello al rggiungimento del valore impostato
+   public Button levelUpButton;
+   public GameObject experienceBar;
+   public Image bar;
 
-   protected GameObject gestioneGioco;
-   protected float tempoIniz, tempoProssimoAttacco;
-   protected int exp;
-   protected Collider[] collisori;
+   protected GameObject gameManager;
+   protected float initialTime, nextAttackTime;
+   protected int experience;
+   protected Collider[] colliders;
 
    // Use this for initialization
    void Awake()
    {
-      gestioneGioco = GameObject.Find("Main Camera");
-      exp = 0;
-      tempoIniz = 1 / attacchiPerSecondo;
-      tempoProssimoAttacco = tempoIniz;
+      gameManager = GameObject.Find("Main Camera");
+      experience = 0;
+      initialTime = 1 / attacksPerSecond;
+      nextAttackTime = initialTime;
    }
 
    // Update is called once per frame
    public virtual void Update()
    {
-      if (tempoProssimoAttacco > 0)
+      if (nextAttackTime > 0)
       {
-         tempoProssimoAttacco -= Time.deltaTime;
+         nextAttackTime -= Time.deltaTime;
       }
-      else if (tempoProssimoAttacco <= 0 && gestioneGioco.GetComponent<GestioneGioco>().energia >= consumoEnergia)
+      else if (nextAttackTime <= 0 && gameManager.GetComponent<GestioneGioco>().energia >= energyConsumption)
       {
-         collisori = Physics.OverlapSphere(transform.position, raggio, enemies);
+         colliders = Physics.OverlapSphere(transform.position, range, enemies);
 
-         if (collisori.Length > 0)
+         if (colliders.Length > 0)
          {
-            Spara(collisori[0].transform);
-            gestioneGioco.GetComponent<GestioneGioco>().energia -= consumoEnergia;
-            tempoProssimoAttacco = tempoIniz;
+            Shoot(colliders[0].transform);
+            gameManager.GetComponent<GestioneGioco>().energia -= energyConsumption;
+            nextAttackTime = initialTime;
          }
       }
 
-      if (collisori != null && collisori.Length > 0)
+      if (colliders != null && colliders.Length > 0)
       {
-         if (testa != null && collisori[0] != null)
-            testa.transform.LookAt(collisori[0].transform);
+         if (head != null && colliders[0] != null)
+            head.transform.LookAt(colliders[0].transform);
 
          /*if(barraExp)
 				barraExp.transform.LookAt(gestioneGioco.transform);*/
       }
    }
 
-   private void TrovaNemici()
+   private void FindEnemies()
    {
 
 
-      if (tempoProssimoAttacco > 0)
+      if (nextAttackTime > 0)
       {
-         tempoProssimoAttacco -= Time.deltaTime;
+         nextAttackTime -= Time.deltaTime;
       }
-      else if (tempoProssimoAttacco <= 0 && gestioneGioco.GetComponent<GestioneGioco>().energia >= consumoEnergia)
+      else if (nextAttackTime <= 0 && gameManager.GetComponent<GestioneGioco>().energia >= energyConsumption)
       {
-         collisori = Physics.OverlapSphere(transform.position, raggio, enemies);
+         colliders = Physics.OverlapSphere(transform.position, range, enemies);
 
-         if (collisori.Length > 0)
+         if (colliders.Length > 0)
          {
-            Spara(collisori[0].transform);
-            gestioneGioco.GetComponent<GestioneGioco>().energia -= consumoEnergia;
-            tempoProssimoAttacco = tempoIniz;
+            Shoot(colliders[0].transform);
+            gameManager.GetComponent<GestioneGioco>().energia -= energyConsumption;
+            nextAttackTime = initialTime;
          }
       }
    }
 
-   virtual protected void Spara(Transform target)
+   virtual protected void Shoot(Transform target)
    {
-      proiettile.GetComponent<Proiettile>().danno = damage;
-      proiettile.GetComponent<Proiettile>().target = target;
-      GameObject.Instantiate(proiettile, canna.transform.position, testa.transform.rotation);
+      projectile.GetComponent<Proiettile>().danno = damage;
+      projectile.GetComponent<Proiettile>().target = target;
+      GameObject.Instantiate(projectile, barrel.transform.position, head.transform.rotation);
 
-      if (exp < expMax)
+      if (experience < maxExperience)
       {
-         exp++;
-         barra.transform.localScale = new Vector3(1 / expMax * exp, barra.transform.localScale.y, barra.transform.localScale.z);
-         if (exp >= expMax)
+         experience++;
+         bar.transform.localScale = new Vector3(1 / maxExperience * experience, bar.transform.localScale.y, bar.transform.localScale.z);
+         if (experience >= maxExperience)
          {
-            lvUp.interactable = true;
+            levelUpButton.interactable = true;
          }
       }
    }

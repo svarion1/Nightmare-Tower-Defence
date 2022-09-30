@@ -56,10 +56,10 @@ public class GestioneGioco : MonoBehaviour
    {
       this.torretta = torretta;
       testoNome.text = torretta.gameObject.name;
-      testoDescrizione.text = torretta.GetComponent<Turret>().descrizione;
+      testoDescrizione.text = torretta.GetComponent<Turret>().description;
       testoDanno.text = "Danno: " + torretta.GetComponent<Turret>().damage;
-      testoAttacchiPerSecondo.text = "Attacchi/sec: " + torretta.GetComponent<Turret>().attacchiPerSecondo;
-      testoRaggio.text = "Raggio: " + torretta.GetComponent<Turret>().raggio;
+      testoAttacchiPerSecondo.text = "Attacchi/sec: " + torretta.GetComponent<Turret>().attacksPerSecond;
+      testoRaggio.text = "Raggio: " + torretta.GetComponent<Turret>().range;
       Debug.Log("Torretta Selezionata");
 
    }
@@ -73,10 +73,10 @@ public class GestioneGioco : MonoBehaviour
          return;
       }
 
-      if (hit.collider.tag == "Casella" && torretta != null && hit.collider.GetComponent<Casella>().occupata == false && risorse >= torretta.GetComponent<Turret>().costo)
+      if (hit.collider.tag == "Casella" && torretta != null && hit.collider.GetComponent<Casella>().occupata == false && risorse >= torretta.GetComponent<Turret>().cost)
       {
          Instantiate(torretta, hit.collider.transform.position + Vector3.up, new Quaternion());
-         risorse -= torretta.GetComponent<Turret>().costo;
+         risorse -= torretta.GetComponent<Turret>().cost;
          hit.collider.GetComponent<Casella>().occupata = true;
       }
       else if (hit.collider.tag == "Estrattore")

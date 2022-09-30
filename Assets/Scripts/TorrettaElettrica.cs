@@ -9,26 +9,26 @@ public class TorrettaElettrica : Turret
 
    public override void Update()
    {
-      Collider[] collisori = Physics.OverlapSphere(transform.position, raggio, enemies);
-      if (collisori.Length > 0)
+      Collider[] colliders = Physics.OverlapSphere(transform.position, range, enemies);
+      if (colliders.Length > 0)
       {
          //ControllaLista();
 
-         if (testa != null)
-            testa.transform.LookAt(collisori[0].transform);
+         if (head != null)
+            head.transform.LookAt(colliders[0].transform);
 
-         if (tempoProssimoAttacco > 0)
+         if (nextAttackTime > 0)
          {
-            tempoProssimoAttacco -= Time.deltaTime;
+            nextAttackTime -= Time.deltaTime;
          }
-         else if (tempoProssimoAttacco <= 0 && gestioneGioco.GetComponent<GestioneGioco>().energia >= consumoEnergia)
+         else if (nextAttackTime <= 0 && gameManager.GetComponent<GestioneGioco>().energia >= energyConsumption)
          {
-            for (int i = 0; i < collisori.Length && i < massimoNemiciColpiti; i++)
+            for (int i = 0; i < colliders.Length && i < massimoNemiciColpiti; i++)
             {
-               collisori[i].GetComponent<Nemico>().DannoBase(damage);
+               colliders[i].GetComponent<Nemico>().DannoBase(damage);
             }
-            gestioneGioco.GetComponent<GestioneGioco>().energia -= consumoEnergia;
-            tempoProssimoAttacco = tempoIniz;
+            gameManager.GetComponent<GestioneGioco>().energia -= energyConsumption;
+            nextAttackTime = initialTime;
          }
       }
 
