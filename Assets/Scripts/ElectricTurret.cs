@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 //questa torretta può colpire più nemici con un solo attacco all'istante
-public class TorrettaElettrica : Turret
+public class ElectricTurret : Turret
 {
 
-   public int massimoNemiciColpiti;  //quanti nemici può colpire insieme
+   public int maxEnemyPerAttack;  //quanti nemici può colpire insieme
 
    public override void Update()
    {
@@ -21,13 +20,13 @@ public class TorrettaElettrica : Turret
          {
             nextAttackTime -= Time.deltaTime;
          }
-         else if (nextAttackTime <= 0 && gameManager.GetComponent<GestioneGioco>().energia >= energyConsumption)
+         else if (nextAttackTime <= 0 && gameManager.GetComponent<GameManager>().energy >= energyConsumption)
          {
-            for (int i = 0; i < colliders.Length && i < massimoNemiciColpiti; i++)
+            for (int i = 0; i < colliders.Length && i < maxEnemyPerAttack; i++)
             {
-               colliders[i].GetComponent<Nemico>().DannoBase(damage);
+               colliders[i].GetComponent<Enemy>().TakeDamage(damage);
             }
-            gameManager.GetComponent<GestioneGioco>().energia -= energyConsumption;
+            gameManager.GetComponent<GameManager>().energy -= energyConsumption;
             nextAttackTime = initialTime;
          }
       }

@@ -9,7 +9,7 @@ public class Turret : MonoBehaviour
    public float damage, range, attacksPerSecond;
    public int cost;  //costo per l'acquisto di una torretta
    public int sellPrice;  //quante risorse vengono riborsate se la torretta viene rimossa
-   public int energyConsumption;  //quantità di energia consumata ad ogni attacco
+   public int energyConsumption;  //quantità di energy consumata ad ogni attacco
    public string description;
    public GameObject head, barrel, projectile;  //parti della torretta
    public GameObject leveledUpVersion;  //la torreta che viene sostituita al passaggio di livello
@@ -39,14 +39,14 @@ public class Turret : MonoBehaviour
       {
          nextAttackTime -= Time.deltaTime;
       }
-      else if (nextAttackTime <= 0 && gameManager.GetComponent<GestioneGioco>().energia >= energyConsumption)
+      else if (nextAttackTime <= 0 && gameManager.GetComponent<GameManager>().energy >= energyConsumption)
       {
          colliders = Physics.OverlapSphere(transform.position, range, enemies);
 
          if (colliders.Length > 0)
          {
             Shoot(colliders[0].transform);
-            gameManager.GetComponent<GestioneGioco>().energia -= energyConsumption;
+            gameManager.GetComponent<GameManager>().energy -= energyConsumption;
             nextAttackTime = initialTime;
          }
       }
@@ -69,14 +69,14 @@ public class Turret : MonoBehaviour
       {
          nextAttackTime -= Time.deltaTime;
       }
-      else if (nextAttackTime <= 0 && gameManager.GetComponent<GestioneGioco>().energia >= energyConsumption)
+      else if (nextAttackTime <= 0 && gameManager.GetComponent<GameManager>().energy >= energyConsumption)
       {
          colliders = Physics.OverlapSphere(transform.position, range, enemies);
 
          if (colliders.Length > 0)
          {
             Shoot(colliders[0].transform);
-            gameManager.GetComponent<GestioneGioco>().energia -= energyConsumption;
+            gameManager.GetComponent<GameManager>().energy -= energyConsumption;
             nextAttackTime = initialTime;
          }
       }
@@ -84,8 +84,8 @@ public class Turret : MonoBehaviour
 
    virtual protected void Shoot(Transform target)
    {
-      projectile.GetComponent<Proiettile>().danno = damage;
-      projectile.GetComponent<Proiettile>().target = target;
+      projectile.GetComponent<Projectile>().damage = damage;
+      projectile.GetComponent<Projectile>().target = target;
       GameObject.Instantiate(projectile, barrel.transform.position, head.transform.rotation);
 
       if (experience < maxExperience)
