@@ -1,0 +1,114 @@
+﻿using UnityEngine;
+using UnityEngine.UI;
+
+//questo script controlla i comportamenti dei nemici e lavora assieme allo script Navigazione
+public class Enemy : MonoBehaviour
+{
+   public float speed;
+   public int damageReduction;  // Value between 0 and 1, it defines damage reduction, when it's 0 is full damage, when it's 1 damege taken is completely cancelled
+   public float maxHp;
+   protected float hp;
+   public GameObject damageText;
+   public GameObject gameManager;
+   public int pathNumber;
+   private GameObject path;
+   private int pathPoint; //punto del percorso a cui sta puntando
+   public Image hpBar;
+   public int droppedResources;  //risorse che vengono guadagnate all'uccisione
+   public int damage;
+   public float attackRange;
+   public float attackDelay; //il tempo che impiega per attaccare
+   private float nextAttackDelay;  //contatore del tempo per il prossimo attacco
+
+   public virtual void Awake()
+   {
+      hp = maxHp; //inizializza la vita
+      gameManager = GameObject.Find("Main Camera");
+      path = GameObject.Find("Path " + pathNumber);
+      nextAttackDelay = attackDelay;
+      transform.LookAt(path.GetComponent<Percorso>().punti[0]);
+   }
+
+   void Update()
+   {
+      hpBar.transform.LookAt(gameManager.transform);  //la barra della vita punta verso la camera
+
+      if (pathPoint < path.GetComponent<Percorso>().punti.Length)
+      {
+         transform.Translate(Vector3.forward * speed * Time.deltaTime);  //si sposta in avanti
+         //controlla se ha raggiunto il prossimo punto
+         if (Distance(path.GetComponent<Percorso>().punti[pathPoint]) <= 0.1)
+         {
+            //punta al punto del percorso successivo
+            pathPoint++;
+            nextAttackDelay -= Time.deltaTime;
+            if (nextAttackDelay <= 0)
+               Attack();
+         }
+         transform.LookAt(path.GetComponent<Percorso>().punti[pathPoint]);
+      }
+      else
+      {
+         nextAttackDelay -= Time.deltaTime;
+         if (nextAttackDelay <= 0)
+            Attack();
+      }
+
+   }
+
+   void OnTriggerEnter(Collider other)
+   {
+
+      if (other.tag == "Projectile")
+      {
+         Debug.Log("Danno");
+         TakeDamage(other.GetComponent<Proiettile>().danno);
+      }
+
+      if (other.tag == "Venomous Projectile")
+      {
+         TakeDamage(other.GetComponent<ProiettileVelenoso>().danno);
+         gameObject.AddComponent<Avvelenamento>();
+         gameObject.GetComponent<Avvelenamento>().durata = other.GetComponent<ProiettileVelenoso>().tempoDurataVeleno;
+         gameObject.GetComponent<Avvelenamento>().tempoAttivazione = other.GetComponent<ProiettileVelenoso>().tempoAttivazione;
+         gameObject.GetComponent<Avvelenamento>().danno = other.GetComponent<ProiettileVelenoso>().dannoVeleno;
+         Debug.Log("Poisoned Enemy");
+      }
+
+      if (other.tag == "Base")
+      {
+         Destroy(gameObject);
+      }
+   }
+
+   //sottrae dalla vita il valore passato, fa apparire un testo che indica il danno subito, aggiorna la barra della vita e controlla la morte
+   public void TakeDamage(float damage)
+   {
+      hp -= damage * (1 - damageReduction);
+      damageText.GetComponent<Text>().text = "" + damage;
+      GameObject.Instantiate(damageText, gameObject.transform.position, new Quaternion());
+      hpBar.transform.localScale = new Vector3(1 / maxHp * hp, hpBar.transform.localScale.y, hpBar.transform.localScale.z);
+      DeathCheck();
+   }
+
+   void DeathCheck()
+   {
+      if (hp <= 0)
+      {
+         gameManager.GetComponent<GameManager>().resources += droppedResources;
+         Destroy(gameObject);
+      }
+   }
+
+   private float Distance(Transform target)
+   {
+      return (float)System.Math.Sqrt(System.Math.Pow(target.position.x - gameObject.transform.position.x, 2)
+                                   + System.Math.Pow(target.position.z - gameObject.transform.position.z, 2));
+   }
+
+   private void Attack()
+   {
+      nextAttackDelay = attackDelay;
+      GetComponent<Animation>().Play();
+   }
+}
