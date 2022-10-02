@@ -1,22 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Base : MonoBehaviour {
+public class Base : MonoBehaviour
+{
 
-	public int vita;
+   public int vita;
 
-	void OnTriggerEnter(Collider other){
-		if(other.tag == "Nemico")
-		{
-			vita -= other.GetComponent<Nemico>().danno;
-			ControllaGameOver();
-		}
-	}
+   void OnTriggerEnter(Collider other)
+   {
+      if (other.tag == "Enemy")
+      {
+         vita -= other.GetComponent<Enemy>().damage;
+         ControllaGameOver();
+      }
+   }
 
-	private bool ControllaGameOver(){
-		if(vita<=0)
-			return true;
-		else
-			return false;
-	}
+   private bool ControllaGameOver()
+   {
+      if (vita <= 0)
+         return true;
+      else
+         return false;
+   }
 }
