@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
    public int maxHp = 100;
    protected int hp;
    public int damage = 5;
-   public GameObject damageText;
+   public Text damageText;
    public int pathNumber;
    private Path path;
    private int pathPoint; //punto del percorso a cui sta puntando
@@ -90,8 +90,8 @@ public class Enemy : MonoBehaviour
    public void TakeDamage(float damage)
    {
       hp -= Mathf.RoundToInt(damage * (1 - damageReduction));
-      damageText.GetComponent<Text>().text = "" + damage;
-      GameObject.Instantiate(damageText, gameObject.transform.position, new Quaternion());
+      damageText.text = "" + damage;
+      GameObject.Instantiate(damageText.gameObject, gameObject.transform.position, new Quaternion());
       hpBar.transform.localScale = new Vector3(1 / maxHp * hp, hpBar.transform.localScale.y, hpBar.transform.localScale.z);
       DeathCheck();
    }
