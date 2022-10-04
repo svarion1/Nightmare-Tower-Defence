@@ -9,7 +9,6 @@ public class Enemy : MonoBehaviour
    public float maxHp;
    protected float hp;
    public GameObject damageText;
-   public GameObject gameManager;
    public int pathNumber;
    private GameObject path;
    private int pathPoint; //punto del percorso a cui sta puntando
@@ -20,10 +19,13 @@ public class Enemy : MonoBehaviour
    public float attackDelay; //il tempo che impiega per attaccare
    private float nextAttackDelay;  //contatore del tempo per il prossimo attacco
 
+   public GameManager gameManager;
+
+
    public virtual void Awake()
    {
       hp = maxHp; //inizializza la vita
-      gameManager = GameObject.Find("Main Camera");
+      gameManager = Camera.main.GetComponent<GameManager>();
       path = GameObject.Find("Path " + pathNumber);
       nextAttackDelay = attackDelay;
       transform.LookAt(path.GetComponent<Path>().waypoints[0]);
