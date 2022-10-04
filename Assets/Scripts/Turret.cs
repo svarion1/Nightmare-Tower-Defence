@@ -6,7 +6,7 @@ public class Turret : MonoBehaviour
 {
    // TODO Transalte comments
    public LayerMask enemies;
-   public float damage, range, attacksPerSecond;
+   public float damage, attackRange, attacksPerSecond;
    public int cost;  //costo per l'acquisto di una torretta
    public int sellPrice;  //quante risorse vengono riborsate se la torretta viene rimossa
    public int energyConsumption;  //quantità di energy consumata ad ogni attacco
@@ -41,7 +41,7 @@ public class Turret : MonoBehaviour
       }
       else if (nextAttackTime <= 0 && gameManager.GetComponent<GameManager>().energy >= energyConsumption)
       {
-         colliders = Physics.OverlapSphere(transform.position, range, enemies);
+         colliders = Physics.OverlapSphere(transform.position, attackRange, enemies);
 
          if (colliders.Length > 0)
          {
@@ -61,6 +61,13 @@ public class Turret : MonoBehaviour
       }
    }
 
+
+   void OnDrawGizmos()
+   {
+      Gizmos.color = Color.yellow;
+      Gizmos.DrawWireSphere(transform.position, attackRange);
+   }
+
    private void FindEnemies()
    {
 
@@ -71,7 +78,7 @@ public class Turret : MonoBehaviour
       }
       else if (nextAttackTime <= 0 && gameManager.GetComponent<GameManager>().energy >= energyConsumption)
       {
-         colliders = Physics.OverlapSphere(transform.position, range, enemies);
+         colliders = Physics.OverlapSphere(transform.position, attackRange, enemies);
 
          if (colliders.Length > 0)
          {

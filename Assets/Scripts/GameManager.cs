@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
       descriptionText.text = torretta.GetComponent<Turret>().description;
       damageText.text = "Damage: " + torretta.GetComponent<Turret>().damage;
       attacksPerSecondText.text = "Attacks/sec: " + torretta.GetComponent<Turret>().attacksPerSecond;
-      rangeText.text = "Range: " + torretta.GetComponent<Turret>().range;
+      rangeText.text = "Range: " + torretta.GetComponent<Turret>().attackRange;
       Debug.Log(torretta.name + " turret selected");
 
    }
