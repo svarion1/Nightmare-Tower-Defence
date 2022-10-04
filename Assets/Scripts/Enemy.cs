@@ -9,14 +9,14 @@ public class Enemy : MonoBehaviour
    public int maxHp = 100;
    protected int hp;
    public int damage = 5;
-
-   public int pathNumber;
-   private Path path;
    private int pathPoint; //punto del percorso a cui sta puntando
    public float attackRange = 1.0f;
    public float attackDelay = 3.0f; //il tempo che impiega per attaccare
    private float nextAttackDelay;  //contatore del tempo per il prossimo attacco
    public int droppedResources = 20;  //risorse che vengono guadagnate all'uccisione
+   public int pathNumber;
+   private Path path;
+   private bool isDead;
 
    // UI elements
    public Text damageText;
@@ -29,6 +29,7 @@ public class Enemy : MonoBehaviour
    {
       hp = maxHp; //inizializza la vita
       path = GameObject.Find("Path " + pathNumber).GetComponent<Path>();
+      isDead = false;
 
       gameManager = Camera.main.GetComponent<GameManager>();
       animator = transform.GetChild(0).GetComponent<Animator>();
@@ -110,6 +111,7 @@ public class Enemy : MonoBehaviour
    {
       if (hp <= 0)
       {
+         isDead = true;
          gameManager.resources += droppedResources;
          animator.SetTrigger("Dead");
          Destroy(gameObject, animator.GetCurrentAnimatorClipInfo(0)[0].clip.length + 1);
