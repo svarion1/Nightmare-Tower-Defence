@@ -4,7 +4,7 @@ using System.Collections;
 public class Projectile : MonoBehaviour
 {
 
-   public float speed, damage, lifeTime;
+   public float speed = 3.0f, damage = 2.5f, lifeTime = 5.0f;
    public Transform target;
 
    void Start()
