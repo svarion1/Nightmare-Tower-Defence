@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class Path : MonoBehaviour
 {
-   public Transform[] waypoints;
+   private Transform[] waypoints;
 
    void Start()
    {
