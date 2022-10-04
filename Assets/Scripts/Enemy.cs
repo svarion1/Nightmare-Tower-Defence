@@ -11,44 +11,45 @@ public class Enemy : MonoBehaviour
    public int damage = 5;
    public GameObject damageText;
    public int pathNumber;
-   private GameObject path;
+   private Path path;
    private int pathPoint; //punto del percorso a cui sta puntando
    public Image hpBar;
    public int droppedResources;  //risorse che vengono guadagnate all'uccisione
 
-   public float attackRange;
-   public float attackDelay; //il tempo che impiega per attaccare
+   public float attackRange = 1.0f;
+   public float attackDelay = 3.0f; //il tempo che impiega per attaccare
    private float nextAttackDelay;  //contatore del tempo per il prossimo attacco
 
    private GameManager gameManager;
 
 
-   public virtual void Awake()
+   public virtual void Start()
    {
       hp = maxHp; //inizializza la vita
       gameManager = Camera.main.GetComponent<GameManager>();
-      path = GameObject.Find("Path " + pathNumber);
+      path = GameObject.Find("Path " + pathNumber).GetComponent<Path>();
       nextAttackDelay = attackDelay;
       transform.LookAt(path.GetComponent<Path>().waypoints[0]);
    }
 
    void Update()
    {
-      hpBar.transform.LookAt(gameManager.transform);  //la barra della vita punta verso la camera
+      //hpBar.transform.LookAt(gameManager.transform);  //la barra della vita punta verso la camera
 
-      if (pathPoint < path.GetComponent<Path>().waypoints.Length)
+      if (pathPoint < path.waypoints.Length)
       {
-         transform.Translate(Vector3.forward * speed * Time.deltaTime);  //si sposta in avanti
+         transform.LookAt(path.waypoints[pathPoint]); // Si rivolge verso il punto del percorso verso il quale sta andando
+         transform.Translate(Vector3.forward * speed * Time.deltaTime);  //Si sposta in avanti
          //controlla se ha raggiunto il prossimo punto
-         if (Distance(path.GetComponent<Path>().waypoints[pathPoint]) <= 0.1)
+         if (Distance(path.waypoints[pathPoint]) <= 0.1)
          {
             //punta al punto del percorso successivo
             pathPoint++;
-            nextAttackDelay -= Time.deltaTime;
+            /*nextAttackDelay -= Time.deltaTime;
             if (nextAttackDelay <= 0)
-               Attack();
+               Attack();*/
          }
-         transform.LookAt(path.GetComponent<Path>().waypoints[pathPoint]);
+
       }
       else
       {
