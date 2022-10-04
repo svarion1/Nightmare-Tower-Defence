@@ -5,6 +5,12 @@ public class Path : MonoBehaviour
 {
    private Transform[] waypoints;
 
+   public Transform[] Waypoints
+   {
+      get { return waypoints; }
+      set { waypoints = value; }
+   }
+
    void Start()
    {
       List<Transform> waypointsList = new List<Transform>();

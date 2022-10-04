@@ -29,19 +29,19 @@ public class Enemy : MonoBehaviour
       gameManager = Camera.main.GetComponent<GameManager>();
       path = GameObject.Find("Path " + pathNumber).GetComponent<Path>();
       nextAttackDelay = attackDelay;
-      transform.LookAt(path.GetComponent<Path>().waypoints[0]);
+      transform.LookAt(path.GetComponent<Path>().Waypoints[0]);
    }
 
    void Update()
    {
       //hpBar.transform.LookAt(gameManager.transform);  //la barra della vita punta verso la camera
 
-      if (pathPoint < path.waypoints.Length)
+      if (pathPoint < path.Waypoints.Length)
       {
-         transform.LookAt(path.waypoints[pathPoint]); // Si rivolge verso il punto del percorso verso il quale sta andando
+         transform.LookAt(path.Waypoints[pathPoint]); // Si rivolge verso il punto del percorso verso il quale sta andando
          transform.Translate(Vector3.forward * speed * Time.deltaTime);  //Si sposta in avanti
          //controlla se ha raggiunto il prossimo punto
-         if (Distance(path.waypoints[pathPoint]) <= 0.1)
+         if (Distance(path.Waypoints[pathPoint]) <= 0.1)
          {
             //punta al punto del percorso successivo
             pathPoint++;
