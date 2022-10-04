@@ -20,7 +20,7 @@ public class Enemy : MonoBehaviour
    public float attackDelay; //il tempo che impiega per attaccare
    private float nextAttackDelay;  //contatore del tempo per il prossimo attacco
 
-   public GameManager gameManager;
+   private GameManager gameManager;
 
 
    public virtual void Awake()
