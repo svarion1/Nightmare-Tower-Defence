@@ -69,11 +69,11 @@ public class GameManager : MonoBehaviour
          return;
       }
 
-      if (hit.collider.tag == "Casella" && selectedTurret != null && hit.collider.GetComponent<Casella>().occupata == false && resources >= selectedTurret.GetComponent<Turret>().cost)
+      if (hit.collider.tag == "Casella" && selectedTurret != null && hit.collider.GetComponent<Tile>().Taken == false && resources >= selectedTurret.GetComponent<Turret>().cost)
       {
          Instantiate(selectedTurret, hit.collider.transform.position + Vector3.up, new Quaternion());
          resources -= selectedTurret.GetComponent<Turret>().cost;
-         hit.collider.GetComponent<Casella>().occupata = true;
+         hit.collider.GetComponent<Tile>().Taken = true;
       }
       else if (hit.collider.tag == "Estrattore")
       {
