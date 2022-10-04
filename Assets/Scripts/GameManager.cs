@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
    private Camera mainCamera;
    private Transform objectHit;
    public GameObject selectedTurret, gui;
-   public int resources;
+   public int resources = 100;
    public Text resourcesText, nameText, descriptionText, damageText, attacksPerSecondText, rangeText, pauseText;  //testi che mostrano statistiche di gioco
    private bool isPaused;
 
