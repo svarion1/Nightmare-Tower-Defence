@@ -25,8 +25,8 @@ public class GameManager : MonoBehaviour
    void Update()
    {
       //testo delle risorse
-      resourcesText.text = "Risorse: " + resources;
-      energyText.text = "Energia: " + energy;
+      resourcesText.text = "Resources: " + resources;
+      energyText.text = "Energy: " + energy;
 
 
 
@@ -53,10 +53,10 @@ public class GameManager : MonoBehaviour
       this.selectedTurret = torretta;
       nameText.text = torretta.gameObject.name;
       descriptionText.text = torretta.GetComponent<Turret>().description;
-      damageText.text = "Danno: " + torretta.GetComponent<Turret>().damage;
-      attacksPerSecondText.text = "Attacchi/sec: " + torretta.GetComponent<Turret>().attacksPerSecond;
-      rangeText.text = "Raggio: " + torretta.GetComponent<Turret>().range;
-      Debug.Log("Torretta Selezionata");
+      damageText.text = "Damage: " + torretta.GetComponent<Turret>().damage;
+      attacksPerSecondText.text = "Attacks/sec: " + torretta.GetComponent<Turret>().attacksPerSecond;
+      rangeText.text = "Range: " + torretta.GetComponent<Turret>().range;
+      Debug.Log(torretta.name + " turret selected");
 
    }
 
@@ -69,13 +69,13 @@ public class GameManager : MonoBehaviour
          return;
       }
 
-      if (hit.collider.tag == "Casella" && selectedTurret != null && hit.collider.GetComponent<Tile>().Taken == false && resources >= selectedTurret.GetComponent<Turret>().cost)
+      if (hit.collider.tag == "Tile" && selectedTurret != null && hit.collider.GetComponent<Tile>().Taken == false && resources >= selectedTurret.GetComponent<Turret>().cost)
       {
          Instantiate(selectedTurret, hit.collider.transform.position + Vector3.up, new Quaternion());
          resources -= selectedTurret.GetComponent<Turret>().cost;
          hit.collider.GetComponent<Tile>().Taken = true;
       }
-      else if (hit.collider.tag == "Estrattore")
+      else if (hit.collider.tag == "Extractor")
       {
          resources += hit.collider.GetComponent<Estrattore>().risorse;
          hit.collider.GetComponent<Estrattore>().risorse = 0;
