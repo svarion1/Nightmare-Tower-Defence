@@ -108,8 +108,10 @@ public class Enemy : MonoBehaviour
    {
       if (hp <= 0)
       {
-         gameManager.GetComponent<GameManager>().resources += droppedResources;
-         Destroy(gameObject);
+         gameManager.resources += droppedResources;
+         animator.SetTrigger("Dead");
+         Destroy(gameObject, animator.GetCurrentAnimatorClipInfo(0)[0].clip.length + 1);
+
       }
    }
 
