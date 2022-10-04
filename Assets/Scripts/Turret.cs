@@ -9,7 +9,6 @@ public class Turret : MonoBehaviour
    public float damage, attackRange, attacksPerSecond;
    public int cost;  //costo per l'acquisto di una torretta
    public int sellPrice;  //quante risorse vengono riborsate se la torretta viene rimossa
-   public int energyConsumption;  //quantità di energy consumata ad ogni attacco
    public string description;
    public GameObject head, barrel, projectile;  //parti della torretta
    public GameObject leveledUpVersion;  //la torreta che viene sostituita al passaggio di livello
