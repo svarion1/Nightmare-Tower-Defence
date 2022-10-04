@@ -1,23 +1,21 @@
 ﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.UI;
 
-public class Wave : MonoBehaviour
+[CreateAssetMenu(fileName = "Wave", menuName = "ScriptableObjects/Wave Scriptable Object", order = 1)]
+public class Wave : ScriptableObject
 {
-   public float timeDelay;
-   public float spawnDelay; // Delay in seconds between each enemy spawn
+   public float timeDelay = 6.0f;
+   public float spawnDelay = 2.5f; // Delay in seconds between each enemy spawn
    public GameObject[] enemies = new GameObject[0];
    public Transform[] spawnPoints = new Transform[0];
-   public Text waveText;
+   public string waveLayout;
 
    private int enemiesCount = 0;
    private int waveCount;  //a che ondata è arrivato
-   private float nextWaveDelay, nextSpawnTime;
-   public string waveLayout;
+   private float nextWaveDelay, nextSpawnDelay;
    private int currentSpawn = 0;
    private char enemyChar;
 
-
+   /*
    private void SpawnEnemy(char tipoNemico)
    {
       switch (tipoNemico)
@@ -32,7 +30,9 @@ public class Wave : MonoBehaviour
             break;
       }
    }
+   */
 
+   /*
    void Start()
    {
       nextSpawnTime = spawnDelay;
@@ -89,5 +89,5 @@ public class Wave : MonoBehaviour
             }
          }
       }
-   }
+   }*/
 }

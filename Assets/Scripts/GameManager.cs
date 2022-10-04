@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
    public Text resourcesText, nameText, descriptionText, damageText, attacksPerSecondText, rangeText, pauseText;  //testi che mostrano statistiche di gioco
    private bool isPaused;
 
+   [Header("Waves")]
+   public Wave[] waves;
 
    // Use this for initialization
    void Start()
