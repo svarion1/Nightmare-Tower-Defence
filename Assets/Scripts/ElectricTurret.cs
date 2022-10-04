@@ -20,13 +20,13 @@ public class ElectricTurret : Turret
          {
             nextAttackTime -= Time.deltaTime;
          }
-         else if (nextAttackTime <= 0 && gameManager.GetComponent<GameManager>().energy >= energyConsumption)
+         else if (nextAttackTime <= 0)
          {
             for (int i = 0; i < colliders.Length && i < maxEnemyPerAttack; i++)
             {
                colliders[i].GetComponent<Enemy>().TakeDamage(damage);
             }
-            gameManager.GetComponent<GameManager>().energy -= energyConsumption;
+
             nextAttackTime = initialTime;
          }
       }

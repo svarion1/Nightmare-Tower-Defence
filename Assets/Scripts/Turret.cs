@@ -39,14 +39,13 @@ public class Turret : MonoBehaviour
       {
          nextAttackTime -= Time.deltaTime;
       }
-      else if (nextAttackTime <= 0 && gameManager.GetComponent<GameManager>().energy >= energyConsumption)
+      else if (nextAttackTime <= 0)
       {
          colliders = Physics.OverlapSphere(transform.position, attackRange, enemies);
 
          if (colliders.Length > 0)
          {
             Shoot(colliders[0].transform);
-            gameManager.GetComponent<GameManager>().energy -= energyConsumption;
             nextAttackTime = initialTime;
          }
       }
@@ -76,14 +75,13 @@ public class Turret : MonoBehaviour
       {
          nextAttackTime -= Time.deltaTime;
       }
-      else if (nextAttackTime <= 0 && gameManager.GetComponent<GameManager>().energy >= energyConsumption)
+      else if (nextAttackTime <= 0)
       {
          colliders = Physics.OverlapSphere(transform.position, attackRange, enemies);
 
          if (colliders.Length > 0)
          {
             Shoot(colliders[0].transform);
-            gameManager.GetComponent<GameManager>().energy -= energyConsumption;
             nextAttackTime = initialTime;
          }
       }

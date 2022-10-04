@@ -9,8 +9,7 @@ public class GameManager : MonoBehaviour
    private Transform objectHit;
    public GameObject selectedTurret, gui;
    public int resources;
-   public int energy;
-   public Text resourcesText, energyText, nameText, descriptionText, damageText, attacksPerSecondText, rangeText, pauseText;  //testi che mostrano statistiche di gioco
+   public Text resourcesText, nameText, descriptionText, damageText, attacksPerSecondText, rangeText, pauseText;  //testi che mostrano statistiche di gioco
    private bool isPaused;
 
 
@@ -26,7 +25,6 @@ public class GameManager : MonoBehaviour
    {
       //testo delle risorse
       resourcesText.text = "Resources: " + resources;
-      energyText.text = "Energy: " + energy;
 
 
 
