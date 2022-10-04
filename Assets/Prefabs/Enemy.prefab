@@ -50,10 +50,10 @@ MonoBehaviour:
   damageReduction: 0
   maxHp: 100
   damage: 5
-  pathNumber: 1
   attackRange: 1
   attackDelay: 3
   droppedResources: 20
+  pathNumber: 1
   damageText: {fileID: 0}
   hpBar: {fileID: 0}
 --- !u!136 &770659075

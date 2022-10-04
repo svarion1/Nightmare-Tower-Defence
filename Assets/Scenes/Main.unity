@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028328, g: 0.22571322, b: 0.30692163, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -659,6 +659,7 @@ MonoBehaviour:
   attacksPerSecondText: {fileID: 1682253734}
   rangeText: {fileID: 1682253734}
   pauseText: {fileID: 1682253734}
+  waves: []
 --- !u!1 &1370063883
 GameObject:
   m_ObjectHideFlags: 0
@@ -1232,5 +1233,10 @@ PrefabInstance:
       propertyPath: damageText
       value: 
       objectReference: {fileID: 1682253734}
+    - target: {fileID: 4496700052175339007, guid: 030b39fe760250d4fb496ba859db1d31,
+        type: 3}
+      propertyPath: damageReduction
+      value: 0.055
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 030b39fe760250d4fb496ba859db1d31, type: 3}
