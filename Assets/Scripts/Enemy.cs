@@ -14,8 +14,7 @@ public class Enemy : MonoBehaviour
    private Path path;
    private int pathPoint; //punto del percorso a cui sta puntando
    public Image hpBar;
-   public int droppedResources;  //risorse che vengono guadagnate all'uccisione
-
+   public int droppedResources = 20;  //risorse che vengono guadagnate all'uccisione
    public float attackRange = 1.0f;
    public float attackDelay = 3.0f; //il tempo che impiega per attaccare
    private float nextAttackDelay;  //contatore del tempo per il prossimo attacco
@@ -111,7 +110,6 @@ public class Enemy : MonoBehaviour
          gameManager.resources += droppedResources;
          animator.SetTrigger("Dead");
          Destroy(gameObject, animator.GetCurrentAnimatorClipInfo(0)[0].clip.length + 1);
-
       }
    }
 
