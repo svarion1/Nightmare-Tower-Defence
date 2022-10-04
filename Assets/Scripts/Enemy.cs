@@ -70,32 +70,6 @@ public class Enemy : MonoBehaviour
       }
    }
 
-   void OnTriggerEnter(Collider other)
-   {
-
-      /*
-      if (other.tag == "Projectile")
-      {
-         Debug.Log("Danno");
-         TakeDamage(other.GetComponent<Projectile>().damage);
-      }
-
-      if (other.tag == "Poisonous Projectile")
-      {
-         TakeDamage(other.GetComponent<ProjectilePoisonous>().damage);
-         gameObject.AddComponent<Avvelenamento>();
-         gameObject.GetComponent<Avvelenamento>().durata = other.GetComponent<ProjectilePoisonous>().poisonDuration;
-         gameObject.GetComponent<Avvelenamento>().tempoAttivazione = other.GetComponent<ProjectilePoisonous>().poisonEffectFrequency;
-         gameObject.GetComponent<Avvelenamento>().damage = other.GetComponent<ProjectilePoisonous>().poisonDamage;
-         Debug.Log("Poisoned Enemy");
-      }
-      */
-      if (other.tag == "Base")
-      {
-         //Destroy(gameObject);
-      }
-   }
-
    //sottrae dalla vita il valore passato, fa apparire un testo che indica il damage subito, aggiorna la barra della vita e controlla la morte
    public void TakeDamage(float damage)
    {
