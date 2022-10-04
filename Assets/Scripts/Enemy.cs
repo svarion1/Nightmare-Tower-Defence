@@ -98,6 +98,9 @@ public class Enemy : MonoBehaviour
       damageText.text = "" + damage;
       GameObject.Instantiate(damageText.gameObject, gameObject.transform.position, new Quaternion());
       hpBar.transform.localScale = new Vector3(1 / maxHp * hp, hpBar.transform.localScale.y, hpBar.transform.localScale.z);
+
+      Debug.Log("Enemy hp: " + hp);
+
       DeathCheck();
    }
 

@@ -6,7 +6,7 @@ public class Turret : MonoBehaviour
 {
    // TODO Transalte comments
    public LayerMask enemiesMask;
-   public float damage = 2.0f, attackRange = 2.5f, attacksPerSecond = 1.0f;
+   public float damage = 25f, attackRange = 3f, attacksPerSecond = 1.0f;
    public int cost = 100;  //costo per l'acquisto di una torretta
    public int sellPrice = 50;  //quante risorse vengono riborsate se la torretta viene rimossa
    public int maxExperience = 300; //la torretta può salire di livello al rggiungimento del valore impostato
