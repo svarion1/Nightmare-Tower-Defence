@@ -21,13 +21,16 @@ public class Enemy : MonoBehaviour
    private float nextAttackDelay;  //contatore del tempo per il prossimo attacco
 
    private GameManager gameManager;
-
+   private Animator animator;
 
    public virtual void Start()
    {
       hp = maxHp; //inizializza la vita
-      gameManager = Camera.main.GetComponent<GameManager>();
       path = GameObject.Find("Path " + pathNumber).GetComponent<Path>();
+
+      gameManager = Camera.main.GetComponent<GameManager>();
+      animator = transform.GetChild(0).GetComponent<Animator>();
+
       nextAttackDelay = attackDelay;
       transform.LookAt(path.GetComponent<Path>().Waypoints[0]);
    }
@@ -56,6 +59,8 @@ public class Enemy : MonoBehaviour
          nextAttackDelay -= Time.deltaTime;
          if (nextAttackDelay <= 0)
             Attack();
+
+         animator.SetTrigger("Base Reached");
       }
 
    }
@@ -113,7 +118,6 @@ public class Enemy : MonoBehaviour
 
    private void Attack()
    {
-      nextAttackDelay = attackDelay;
-      GetComponent<Animation>().Play();
+      // TODO Attack Logic
    }
 }
