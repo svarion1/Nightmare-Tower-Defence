@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class Enemy : MonoBehaviour
 {
    public float speed = 1.0f;
+   [Range(0f, 1f)]
    public float damageReduction = 0f;  // Value between 0 and 1, it defines damage reduction, when it's 0 is full damage, when it's 1 damege taken is completely cancelled
    public int maxHp = 100;
    protected int hp;
@@ -99,6 +100,11 @@ public class Enemy : MonoBehaviour
    public void TakeDamage(float damage)
    {
       hp -= Mathf.RoundToInt(damage * (1 - damageReduction));
+      if (hp < 0)
+      {
+         hp = 0;
+      }
+
       damageText.text = "" + damage;
       GameObject.Instantiate(damageText.gameObject, gameObject.transform.position, new Quaternion());
       hpBar.transform.localScale = new Vector3(1 / maxHp * hp, hpBar.transform.localScale.y, hpBar.transform.localScale.z);
