@@ -41,31 +41,32 @@ public class Enemy : MonoBehaviour
    void Update()
    {
       //hpBar.transform.LookAt(gameManager.transform);  //la barra della vita punta verso la camera
-
-      if (pathPoint < path.Waypoints.Length)
+      if (!isDead)
       {
-         transform.LookAt(path.Waypoints[pathPoint]); // Si rivolge verso il punto del percorso verso il quale sta andando
-         transform.Translate(Vector3.forward * speed * Time.deltaTime);  //Si sposta in avanti
-         //controlla se ha raggiunto il prossimo punto
-         if (Distance(path.Waypoints[pathPoint]) <= 0.1)
+         if (pathPoint < path.Waypoints.Length)
          {
-            //punta al punto del percorso successivo
-            pathPoint++;
-            /*nextAttackDelay -= Time.deltaTime;
-            if (nextAttackDelay <= 0)
-               Attack();*/
+            transform.LookAt(path.Waypoints[pathPoint]); // Si rivolge verso il punto del percorso verso il quale sta andando
+            transform.Translate(Vector3.forward * speed * Time.deltaTime);  //Si sposta in avanti
+                                                                            //controlla se ha raggiunto il prossimo punto
+            if (Distance(path.Waypoints[pathPoint]) <= 0.1)
+            {
+               //punta al punto del percorso successivo
+               pathPoint++;
+               /*nextAttackDelay -= Time.deltaTime;
+               if (nextAttackDelay <= 0)
+                  Attack();*/
+            }
+
          }
+         else
+         {
+            nextAttackDelay -= Time.deltaTime;
+            if (nextAttackDelay <= 0)
+               Attack();
 
+            animator.SetTrigger("Base Reached");
+         }
       }
-      else
-      {
-         nextAttackDelay -= Time.deltaTime;
-         if (nextAttackDelay <= 0)
-            Attack();
-
-         animator.SetTrigger("Base Reached");
-      }
-
    }
 
    void OnTriggerEnter(Collider other)
@@ -112,6 +113,7 @@ public class Enemy : MonoBehaviour
       if (hp <= 0)
       {
          isDead = true;
+         GetComponent<Collider>().enabled = false;
          gameManager.resources += droppedResources;
          animator.SetTrigger("Dead");
          Destroy(gameObject, animator.GetCurrentAnimatorClipInfo(0)[0].clip.length + 1);
