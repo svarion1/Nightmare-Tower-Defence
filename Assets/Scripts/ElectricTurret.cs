@@ -8,7 +8,7 @@ public class ElectricTurret : Turret
 
    public override void Update()
    {
-      Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange, enemies);
+      Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange, enemiesMask);
       if (colliders.Length > 0)
       {
          //ControllaLista();

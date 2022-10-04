@@ -63,6 +63,7 @@ public class Enemy : MonoBehaviour
    void OnTriggerEnter(Collider other)
    {
 
+      /*
       if (other.tag == "Projectile")
       {
          Debug.Log("Danno");
@@ -78,10 +79,10 @@ public class Enemy : MonoBehaviour
          gameObject.GetComponent<Avvelenamento>().damage = other.GetComponent<ProjectilePoisonous>().poisonDamage;
          Debug.Log("Poisoned Enemy");
       }
-
+      */
       if (other.tag == "Base")
       {
-         Destroy(gameObject);
+         //Destroy(gameObject);
       }
    }
 
