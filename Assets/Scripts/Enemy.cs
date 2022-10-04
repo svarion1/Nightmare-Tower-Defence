@@ -87,7 +87,7 @@ public class Enemy : MonoBehaviour
    //sottrae dalla vita il valore passato, fa apparire un testo che indica il damage subito, aggiorna la barra della vita e controlla la morte
    public void TakeDamage(float damage)
    {
-      hp -= damage * (1 - damageReduction);
+      hp -= Mathf.RoundToInt(damage * (1 - damageReduction));
       damageText.GetComponent<Text>().text = "" + damage;
       GameObject.Instantiate(damageText, gameObject.transform.position, new Quaternion());
       hpBar.transform.localScale = new Vector3(1 / maxHp * hp, hpBar.transform.localScale.y, hpBar.transform.localScale.z);
