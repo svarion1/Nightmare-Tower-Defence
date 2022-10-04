@@ -4,22 +4,27 @@ using System.Collections;
 public class Base : MonoBehaviour
 {
 
-   public int vita;
+   public int hp;
+
+   private GameManager gameManager;
+
+   void Start()
+   {
+      gameManager = Camera.main.GetComponent<GameManager>();
+   }
 
    void OnTriggerEnter(Collider other)
    {
       if (other.tag == "Enemy")
       {
-         vita -= other.GetComponent<Enemy>().damage;
-         ControllaGameOver();
+         hp -= other.GetComponent<Enemy>().damage;
+         GameOverCheck();
       }
    }
 
-   private bool ControllaGameOver()
+   private void GameOverCheck()
    {
-      if (vita <= 0)
-         return true;
-      else
-         return false;
+      if (hp <= 0)
+         gameManager.GameOver();
    }
 }
