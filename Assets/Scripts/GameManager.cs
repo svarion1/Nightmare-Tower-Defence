@@ -75,17 +75,10 @@ public class GameManager : MonoBehaviour
          resources -= selectedTurret.GetComponent<Turret>().cost;
          hit.collider.GetComponent<Tile>().Taken = true;
       }
-      else if (hit.collider.tag == "Extractor")
-      {
-         resources += hit.collider.GetComponent<Estrattore>().risorse;
-         hit.collider.GetComponent<Estrattore>().risorse = 0;
-
-      }
-
    }
 
    public void GameOver()
    {
-
+      //TODO Game Over Logic
    }
 }
