@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
    public float damageReduction = 0f;  // Value between 0 and 1, it defines damage reduction, when it's 0 is full damage, when it's 1 damege taken is completely cancelled
    public int maxHp = 100;
    protected int hp;
-   public float damage = 5;
+   public int damage = 5;
    public GameObject damageText;
    public int pathNumber;
    private GameObject path;
