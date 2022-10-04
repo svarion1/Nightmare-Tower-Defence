@@ -4,17 +4,18 @@ using UnityEngine.UI;
 //questo script controlla i comportamenti dei nemici e lavora assieme allo script Navigazione
 public class Enemy : MonoBehaviour
 {
-   public float speed;
-   public int damageReduction;  // Value between 0 and 1, it defines damage reduction, when it's 0 is full damage, when it's 1 damege taken is completely cancelled
-   public float maxHp;
-   protected float hp;
+   public float speed = 1.0f;
+   public float damageReduction = 0f;  // Value between 0 and 1, it defines damage reduction, when it's 0 is full damage, when it's 1 damege taken is completely cancelled
+   public int maxHp = 100;
+   protected int hp;
+   public float damage = 5;
    public GameObject damageText;
    public int pathNumber;
    private GameObject path;
    private int pathPoint; //punto del percorso a cui sta puntando
    public Image hpBar;
    public int droppedResources;  //risorse che vengono guadagnate all'uccisione
-   public int damage;
+
    public float attackRange;
    public float attackDelay; //il tempo che impiega per attaccare
    private float nextAttackDelay;  //contatore del tempo per il prossimo attacco
