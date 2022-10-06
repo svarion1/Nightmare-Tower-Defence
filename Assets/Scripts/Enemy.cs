@@ -20,8 +20,8 @@ public class Enemy : MonoBehaviour
    private bool isDead;
 
    // UI elements
-   public Text damageText;
-   public Image hpBar;
+   //public Text damageText;
+   //public Image hpBar;
 
    private GameManager gameManager;
    private Animator animator;
@@ -46,18 +46,7 @@ public class Enemy : MonoBehaviour
       {
          if (pathPoint < path.Waypoints.Length)
          {
-            transform.LookAt(path.Waypoints[pathPoint]); // Si rivolge verso il punto del percorso verso il quale sta andando
-            transform.Translate(Vector3.forward * speed * Time.deltaTime);  //Si sposta in avanti
-                                                                            //controlla se ha raggiunto il prossimo punto
-            if (Distance(path.Waypoints[pathPoint]) <= 0.1)
-            {
-               //punta al punto del percorso successivo
-               pathPoint++;
-               /*nextAttackDelay -= Time.deltaTime;
-               if (nextAttackDelay <= 0)
-                  Attack();*/
-            }
-
+            Move();
          }
          else
          {
@@ -70,6 +59,17 @@ public class Enemy : MonoBehaviour
       }
    }
 
+   private void Move()
+   {
+      transform.LookAt(path.Waypoints[pathPoint]); // Si rivolge verso il punto del percorso verso il quale sta andando
+      transform.Translate(Vector3.forward * speed * Time.deltaTime);  //Si sposta in avanti
+                                                                      //controlla se ha raggiunto il prossimo punto
+      if (Distance(path.Waypoints[pathPoint]) <= 0.1)
+      {
+         pathPoint++;
+      }
+   }
+
    //sottrae dalla vita il valore passato, fa apparire un testo che indica il damage subito, aggiorna la barra della vita e controlla la morte
    public void TakeDamage(float damage)
    {
@@ -79,9 +79,9 @@ public class Enemy : MonoBehaviour
          hp = 0;
       }
 
-      damageText.text = "" + damage;
-      GameObject.Instantiate(damageText.gameObject, gameObject.transform.position, new Quaternion());
-      hpBar.transform.localScale = new Vector3(1 / maxHp * hp, hpBar.transform.localScale.y, hpBar.transform.localScale.z);
+      //damageText.text = "" + damage;
+      //GameObject.Instantiate(damageText.gameObject, gameObject.transform.position, new Quaternion());
+      //hpBar.transform.localScale = new Vector3(1 / maxHp * hp, hpBar.transform.localScale.y, hpBar.transform.localScale.z);
 
       Debug.Log("Enemy hp: " + hp);
 
