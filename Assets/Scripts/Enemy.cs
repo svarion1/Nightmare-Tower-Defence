@@ -39,6 +39,7 @@ public class Enemy : MonoBehaviour
       gameManager = Camera.main.GetComponent<GameManager>();
       animator = transform.GetChild(0).GetComponent<Animator>();
       nav = GetComponent<NavMeshAgent>();
+      nav.speed = speed;
       nav.SetDestination(path.Waypoints[path.Waypoints.Length - 1].position);
 
       transform.LookAt(path.GetComponent<Path>().Waypoints[0]);

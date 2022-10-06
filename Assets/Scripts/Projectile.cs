@@ -15,8 +15,12 @@ public class Projectile : MonoBehaviour
    // Update is called once per frame
    void Update()
    {
-      transform.LookAt(target);
-      transform.Translate(Vector3.forward * speed * Time.deltaTime);
+      if (target)
+      {
+         transform.LookAt(target);
+         transform.Translate(Vector3.forward * speed * Time.deltaTime);
+      }
+      else Destroy(gameObject);
    }
 
    void OnTriggerEnter(Collider other)

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Wave 1
   m_EditorClassIdentifier: 
   startDelay: 6
-  spawnDelay: 1
+  spawnDelay: 2
   enemies:
   - {fileID: 4496700052175339004, guid: 030b39fe760250d4fb496ba859db1d31, type: 3}
   - {fileID: 4496700052175339004, guid: 030b39fe760250d4fb496ba859db1d31, type: 3}
