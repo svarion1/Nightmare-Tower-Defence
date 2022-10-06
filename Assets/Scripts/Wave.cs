@@ -4,28 +4,21 @@
 public class Wave : ScriptableObject
 {
    [Header("Timing")]
-   public float timeDelay = 6.0f;
+   public float startDelay = 6.0f;
    public float spawnDelay = 2.5f; // Delay in seconds between each enemy spawn
 
-   [Header("Lists")]
-   public GameObject[] enemies = new GameObject[0];
-   public Transform[] spawnPoints = new Transform[0];
-
    [Header("Layout")]
-   public string waveLayout;
+   //public string waveLayout;
+   public GameObject[] enemies;
 
-   private int enemiesCount;
-   private int waveCount;  //a che ondata è arrivato
-   private float nextWaveDelay, nextSpawnDelay;
-   private int currentSpawn;
-   private char enemyChar;
+   /*
+      private int enemiesCount;
+      private int waveCount;  //a che ondata è arrivato
+      private float nextWaveDelay, nextSpawnDelay;
+      private int currentSpawn;
+      private char enemyChar;
+   */
 
-
-   void Awake()
-   {
-      enemiesCount = 0;
-      currentSpawn = 0;
-   }
    /*
    private void SpawnEnemy(char tipoNemico)
    {

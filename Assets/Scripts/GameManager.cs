@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 
 //WARNING!!! Attach this component to Main Camera
@@ -12,24 +13,93 @@ public class GameManager : MonoBehaviour
    public Text resourcesText, nameText, descriptionText, damageText, attacksPerSecondText, rangeText, pauseText;  //testi che mostrano statistiche di gioco
    private bool isPaused;
 
-   [Header("Waves")]
+   [Header("Waves Design")]
+   public Transform[] spawnPoints;
    public Wave[] waves;
+   private Stack<Wave> wavesStack;
+
+
+   private Wave currentWave;
+   private int enemyIndex;
+   private float nextWaveTime;
+   private float nextEnemyTime;
 
    // Use this for initialization
    void Start()
    {
       mainCamera = Camera.main;
       isPaused = false;
+
+      wavesStack = new Stack<Wave>();
+
+      for (int i = waves.Length - 1; i >= 0; i--)
+      {
+         wavesStack.Push(waves[i]);
+      }
+
+      currentWave = wavesStack.Pop();
+      enemyIndex = 0;
+      nextWaveTime = currentWave.startDelay;
+
    }
 
    // Update is called once per frame
    void Update()
    {
-      //testo delle risorse
-      resourcesText.text = "Resources: " + resources;
+      //resourcesText.text = "Resources: " + resources;
 
+      ManageSpawn();
+      ManageInputs();
+   }
 
+   private void ManageSpawn()
+   {
+      if (nextWaveTime > 0)
+      {
+         nextWaveTime -= Time.deltaTime;
+      }
+      else
+      {
+         if (nextEnemyTime > 0)
+         {
+            nextEnemyTime -= Time.deltaTime;
+         }
+         else
+         {
+            SpawnEnemy();
+         }
+      }
 
+   }
+
+   private void SpawnEnemy()
+   {
+      Instantiate(currentWave.enemies[enemyIndex], spawnPoints[Random.Range(0, spawnPoints.Length)]);
+      nextEnemyTime = currentWave.spawnDelay;
+      enemyIndex++;
+
+      if (enemyIndex >= currentWave.enemies.Length)
+      {
+         /*if (enemySetIndex < currentWave.enemies.Length)
+         {
+
+         }*/
+         NextWave();
+      }
+
+   }
+
+   private void NextWave()
+   {
+      currentWave = wavesStack.Pop();
+      enemyIndex = 0;
+
+      nextWaveTime = currentWave.startDelay;
+      nextEnemyTime = currentWave.spawnDelay;
+   }
+
+   private void ManageInputs()
+   {
       if (Input.GetMouseButtonDown(0) && !isPaused)
       {
          onMouseLeftClick();
