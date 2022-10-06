@@ -12,8 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2464581653462bd4aae6f18d8b715d50, type: 3}
   m_Name: Wave 1
   m_EditorClassIdentifier: 
-  timeDelay: 6
-  spawnDelay: 2.5
-  enemies: []
-  spawnPoints: []
-  waveLayout: 
+  startDelay: 6
+  spawnDelay: 1
+  enemies:
+  - {fileID: 4496700052175339004, guid: 030b39fe760250d4fb496ba859db1d31, type: 3}
+  - {fileID: 4496700052175339004, guid: 030b39fe760250d4fb496ba859db1d31, type: 3}
+  - {fileID: 4496700052175339004, guid: 030b39fe760250d4fb496ba859db1d31, type: 3}
+  - {fileID: 4496700052175339004, guid: 030b39fe760250d4fb496ba859db1d31, type: 3}
+  - {fileID: 4496700052175339004, guid: 030b39fe760250d4fb496ba859db1d31, type: 3}
+  - {fileID: 4496700052175339004, guid: 030b39fe760250d4fb496ba859db1d31, type: 3}
+  - {fileID: 4496700052175339004, guid: 030b39fe760250d4fb496ba859db1d31, type: 3}
+  - {fileID: 4496700052175339004, guid: 030b39fe760250d4fb496ba859db1d31, type: 3}
+  - {fileID: 4496700052175339004, guid: 030b39fe760250d4fb496ba859db1d31, type: 3}
+  - {fileID: 4496700052175339004, guid: 030b39fe760250d4fb496ba859db1d31, type: 3}
+  - {fileID: 4496700052175339004, guid: 030b39fe760250d4fb496ba859db1d31, type: 3}
+  - {fileID: 4496700052175339004, guid: 030b39fe760250d4fb496ba859db1d31, type: 3}
+  - {fileID: 4496700052175339004, guid: 030b39fe760250d4fb496ba859db1d31, type: 3}
+  - {fileID: 4496700052175339004, guid: 030b39fe760250d4fb496ba859db1d31, type: 3}
+  - {fileID: 4496700052175339004, guid: 030b39fe760250d4fb496ba859db1d31, type: 3}

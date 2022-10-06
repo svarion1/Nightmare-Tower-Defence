@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AI;
 
 //questo script controlla i comportamenti dei nemici e lavora assieme allo script Navigazione
 public class Enemy : MonoBehaviour
@@ -25,17 +26,21 @@ public class Enemy : MonoBehaviour
 
    private GameManager gameManager;
    private Animator animator;
+   private NavMeshAgent nav;
+
 
    public virtual void Start()
    {
       hp = maxHp; //inizializza la vita
       path = GameObject.Find("Path " + pathNumber).GetComponent<Path>();
       isDead = false;
+      nextAttackDelay = attackDelay;
 
       gameManager = Camera.main.GetComponent<GameManager>();
       animator = transform.GetChild(0).GetComponent<Animator>();
+      nav = GetComponent<NavMeshAgent>();
+      nav.SetDestination(path.Waypoints[path.Waypoints.Length - 1].position);
 
-      nextAttackDelay = attackDelay;
       transform.LookAt(path.GetComponent<Path>().Waypoints[0]);
    }
 
@@ -61,6 +66,7 @@ public class Enemy : MonoBehaviour
 
    private void Move()
    {
+      /*
       transform.LookAt(path.Waypoints[pathPoint]); // Si rivolge verso il punto del percorso verso il quale sta andando
       transform.Translate(Vector3.forward * speed * Time.deltaTime);  //Si sposta in avanti
                                                                       //controlla se ha raggiunto il prossimo punto
@@ -68,6 +74,7 @@ public class Enemy : MonoBehaviour
       {
          pathPoint++;
       }
+      */
    }
 
    //sottrae dalla vita il valore passato, fa apparire un testo che indica il damage subito, aggiorna la barra della vita e controlla la morte
@@ -83,7 +90,7 @@ public class Enemy : MonoBehaviour
       //GameObject.Instantiate(damageText.gameObject, gameObject.transform.position, new Quaternion());
       //hpBar.transform.localScale = new Vector3(1 / maxHp * hp, hpBar.transform.localScale.y, hpBar.transform.localScale.z);
 
-      Debug.Log("Enemy hp: " + hp);
+      //Debug.Log("Enemy hp: " + hp);
 
       DeathCheck();
    }
