@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour
    private Transform objectHit;
    public GameObject selectedTurret, gui;
    public int resources = 100;
-   public Text resourcesText, nameText, descriptionText, damageText, attacksPerSecondText, rangeText, pauseText;  //testi che mostrano statistiche di gioco
    private bool isPaused;
 
    [Header("Waves Design")]
@@ -18,13 +17,24 @@ public class GameManager : MonoBehaviour
    public Wave[] waves;
    private Stack<Wave> wavesStack;
 
-
    private Wave currentWave;
    private int enemyIndex;
    private float nextWaveTime;
    private float nextEnemyTime;
 
-   // Use this for initialization
+   private Tile hoveredTile;
+
+   [Header("UI")]
+   public Text resourcesText;
+   public Text nameText;
+   public Text descriptionText;
+   public Text damageText;
+   public Text attacksPerSecondText;
+   public Text rangeText;
+   public Text pauseText;
+   public GameObject turretsShop;
+
+
    void Start()
    {
       mainCamera = Camera.main;
@@ -41,9 +51,12 @@ public class GameManager : MonoBehaviour
       enemyIndex = 0;
       nextWaveTime = currentWave.startDelay;
 
+      /*
+      hoveredTile = GameObject.Find("Tile 1").GetComponent<Tile>();
+      hoveredTile.OnHover();
+      */
    }
 
-   // Update is called once per frame
    void Update()
    {
       //resourcesText.text = "Resources: " + resources;
@@ -100,9 +113,39 @@ public class GameManager : MonoBehaviour
 
    private void ManageInputs()
    {
+      RaycastHit hit;
+
+      /*
+      if (!Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 100) && !hit.transform)
+      {
+         return;
+      }
+      */
+
+      if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 100) && hit.collider.tag == "Tile")
+      {
+         if (hoveredTile && !Transform.Equals(hoveredTile.transform, hit.transform))
+         {
+            hoveredTile.OnExit();
+         }
+
+
+         hoveredTile = hit.transform.GetComponent<Tile>();
+         hoveredTile.OnHover();
+      }
+      else
+      {
+         if (hoveredTile)
+         {
+            hoveredTile.OnExit();
+            hoveredTile = null;
+            HideTurretsShopUI();
+         }
+      }
+
       if (Input.GetMouseButtonDown(0) && !isPaused)
       {
-         onMouseLeftClick();
+         onMouseLeftClick(hit);
       }
       else if (Input.GetKeyDown(KeyCode.Escape) && !isPaused)
       {
@@ -130,21 +173,25 @@ public class GameManager : MonoBehaviour
 
    }
 
-   private void onMouseLeftClick()
+   private void onMouseLeftClick(RaycastHit hit)
    {
-      RaycastHit hit;
-
-      if (!Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 100) && !hit.transform)
-      {
-         return;
-      }
-
       if (hit.collider.tag == "Tile" && selectedTurret != null && hit.collider.GetComponent<Tile>().Taken == false && resources >= selectedTurret.GetComponent<Turret>().cost)
       {
-         Instantiate(selectedTurret, hit.collider.transform.position + Vector3.up, new Quaternion());
+         /*Instantiate(selectedTurret, hit.collider.transform.position + Vector3.up, new Quaternion());
          resources -= selectedTurret.GetComponent<Turret>().cost;
-         hit.collider.GetComponent<Tile>().Taken = true;
+         hit.collider.GetComponent<Tile>().Taken = true;*/
+         ShowTurretsShopUI();
       }
+   }
+
+   private void ShowTurretsShopUI()
+   {
+      turretsShop.GetComponent<Animation>().Play("Show Turrets Shop");
+   }
+
+   private void HideTurretsShopUI()
+   {
+      turretsShop.GetComponent<Animation>().Play("Hide Turrets Shop");
    }
 
    public void GameOver()
