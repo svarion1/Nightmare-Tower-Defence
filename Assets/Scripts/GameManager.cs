@@ -6,9 +6,12 @@ using System.Collections.Generic;
 //WARNING!!! Attach this component to Main Camera
 public class GameManager : MonoBehaviour
 {
+
+   #region Fields
+
    private Camera mainCamera;
    private Transform objectHit;
-   public GameObject selectedTurret, gui;
+   public GameObject selectedTurret;
    public int resources = 100;
    private bool isPaused;
 
@@ -23,8 +26,11 @@ public class GameManager : MonoBehaviour
    private float nextEnemyTime;
 
    private Tile hoveredTile;
+   private Tile selectedTile;
 
    [Header("UI")]
+   public GameObject playInterface;
+   public GameObject pauseInterface;
    public Text resourcesText;
    public Text nameText;
    public Text descriptionText;
@@ -34,6 +40,10 @@ public class GameManager : MonoBehaviour
    public Text pauseText;
    public GameObject turretsShop;
 
+   #endregion
+
+
+   #region Init
 
    void Start()
    {
@@ -56,6 +66,11 @@ public class GameManager : MonoBehaviour
       hoveredTile.OnHover();
       */
    }
+
+   #endregion
+
+
+   #region Game Loop Events
 
    void Update()
    {
@@ -111,6 +126,16 @@ public class GameManager : MonoBehaviour
       nextEnemyTime = currentWave.spawnDelay;
    }
 
+   public void GameOver()
+   {
+      //TODO Game Over Logic
+   }
+
+   #endregion
+
+
+   #region Input Management
+
    private void ManageInputs()
    {
       RaycastHit hit;
@@ -124,24 +149,30 @@ public class GameManager : MonoBehaviour
 
       if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 100) && hit.collider.tag == "Tile")
       {
-         if (hoveredTile && !Transform.Equals(hoveredTile.transform, hit.transform))
+         if (!selectedTile)
          {
-            hoveredTile.OnExit();
+            if (!hoveredTile)
+            {
+               hoveredTile = hit.transform.GetComponent<Tile>();
+               hoveredTile.OnHover();
+            }
+            else if (!Transform.Equals(hoveredTile.transform, hit.transform))
+            {
+               hoveredTile.OnExit();
+               hoveredTile = hit.transform.GetComponent<Tile>();
+               hoveredTile.OnHover();
+            }
          }
-
-
-         hoveredTile = hit.transform.GetComponent<Tile>();
-         hoveredTile.OnHover();
       }
-      else
+      /*else
       {
          if (hoveredTile)
          {
             hoveredTile.OnExit();
             hoveredTile = null;
-            HideTurretsShopUI();
+            //HideTurretsShopUI();
          }
-      }
+      }*/
 
       if (Input.GetMouseButtonDown(0) && !isPaused)
       {
@@ -149,18 +180,15 @@ public class GameManager : MonoBehaviour
       }
       else if (Input.GetKeyDown(KeyCode.Escape) && !isPaused)
       {
-         Time.timeScale = 0;
-         gui.SetActive(false);
-         isPaused = true;
+         OnPause();
       }
       else if (Input.GetKeyDown(KeyCode.Escape) && isPaused)
       {
-         Time.timeScale = 1;
-         gui.SetActive(true);
-         isPaused = false;
+         OnPlay();
       }
    }
 
+   /*
    public void SelectTurret(GameObject torretta)
    {
       this.selectedTurret = torretta;
@@ -172,6 +200,27 @@ public class GameManager : MonoBehaviour
       Debug.Log(torretta.name + " turret selected");
 
    }
+   */
+
+   public void OnTurretBuy(GameObject turretGO)
+   {
+      if (selectedTile)
+      {
+         Turret turret = turretGO.GetComponent<Turret>();
+
+         if (turret.cost <= resources)
+         {
+            resources -= turret.cost;
+            PlaceTurret(turretGO);
+         }
+      }
+   }
+
+   public void PlaceTurret(GameObject turretGO)
+   {
+      Instantiate(turretGO, selectedTile.transform);
+      selectedTile.OnTake();
+   }
 
    private void onMouseLeftClick(RaycastHit hit)
    {
@@ -180,6 +229,9 @@ public class GameManager : MonoBehaviour
          /*Instantiate(selectedTurret, hit.collider.transform.position + Vector3.up, new Quaternion());
          resources -= selectedTurret.GetComponent<Turret>().cost;
          hit.collider.GetComponent<Tile>().Taken = true;*/
+         if (selectedTile) selectedTile.OnExit();
+         selectedTile = hit.transform.GetComponent<Tile>();
+         selectedTile.OnSelect();
          ShowTurretsShopUI();
       }
    }
@@ -189,13 +241,29 @@ public class GameManager : MonoBehaviour
       turretsShop.GetComponent<Animation>().Play("Show Turrets Shop");
    }
 
-   private void HideTurretsShopUI()
+   public void HideTurretsShopUI()
    {
+      hoveredTile = null;
+      selectedTile = null;
+
       turretsShop.GetComponent<Animation>().Play("Hide Turrets Shop");
    }
 
-   public void GameOver()
+   private void OnPlay()
    {
-      //TODO Game Over Logic
+      Time.timeScale = 1;
+      playInterface.SetActive(true);
+      pauseInterface.SetActive(false);
+      isPaused = false;
    }
+
+   private void OnPause()
+   {
+      Time.timeScale = 0;
+      playInterface.SetActive(false);
+      pauseInterface.SetActive(true);
+      isPaused = true;
+   }
+
+   #endregion
 }
