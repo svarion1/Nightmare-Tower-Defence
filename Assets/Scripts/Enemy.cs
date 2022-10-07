@@ -82,9 +82,11 @@ public class Enemy : MonoBehaviour
    public void TakeDamage(float damage)
    {
       hp -= Mathf.RoundToInt(damage * (1 - damageReduction));
+
       if (hp < 0)
       {
          hp = 0;
+         OnDeath();
       }
 
       //damageText.text = "" + damage;
@@ -92,20 +94,16 @@ public class Enemy : MonoBehaviour
       //hpBar.transform.localScale = new Vector3(1 / maxHp * hp, hpBar.transform.localScale.y, hpBar.transform.localScale.z);
 
       //Debug.Log("Enemy hp: " + hp);
-
-      DeathCheck();
    }
 
-   void DeathCheck()
+   void OnDeath()
    {
-      if (hp <= 0)
-      {
-         isDead = true;
-         GetComponent<Collider>().enabled = false;
-         gameManager.resources += droppedResources;
-         animator.SetTrigger("Dead");
-         Destroy(gameObject, animator.GetCurrentAnimatorClipInfo(0)[0].clip.length + 1);
-      }
+      isDead = true;
+      GetComponent<Collider>().enabled = false;
+      nav.enabled = false;
+      gameManager.resources += droppedResources;
+      animator.SetTrigger("Dead");
+      Destroy(gameObject, animator.GetCurrentAnimatorClipInfo(0)[0].clip.length + 1);
    }
 
    private float Distance(Transform target)
