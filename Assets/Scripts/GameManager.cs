@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
 
 
    private bool isPaused;
+   private bool isTurretsShopOpened;
    private int resources = 100;
    private Camera mainCamera;
    private Stack<Wave> wavesStack;
@@ -154,7 +155,7 @@ public class GameManager : MonoBehaviour
          }
          */
 
-         if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 100) && hit.collider.tag == "Tile")
+         if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 100) && hit.collider.tag == "Tile" && hit.collider.GetComponent<Tile>().Taken == false)
          {
             if (!selectedTile)
             {
@@ -204,7 +205,7 @@ public class GameManager : MonoBehaviour
 
    private void onMouseLeftClick(RaycastHit hit)
    {
-      if (hit.collider.tag == "Tile" /*&& selectedTurret != null*/ && hit.collider.GetComponent<Tile>().Taken == false /*&& resources >= selectedTurret.GetComponent<Turret>().cost*/)
+      if (hit.collider.tag == "Tile" /*&& selectedTurret != null /*&& resources >= selectedTurret.GetComponent<Turret>().cost*/)
       {
          /*Instantiate(selectedTurret, hit.collider.transform.position + Vector3.up, new Quaternion());
          resources -= selectedTurret.GetComponent<Turret>().cost;
@@ -212,7 +213,10 @@ public class GameManager : MonoBehaviour
          if (selectedTile) selectedTile.OnExit();
          selectedTile = hit.transform.GetComponent<Tile>();
          selectedTile.OnSelect();
-         ShowTurretsShopUI();
+         if (!isTurretsShopOpened)
+         {
+            ShowTurretsShopUI();
+         }
       }
    }
 
@@ -234,21 +238,25 @@ public class GameManager : MonoBehaviour
    {
       Instantiate(turretGameObject, selectedTile.transform);
       selectedTile.OnTake();
-      HideTurretsShopUI();
+
+      if (isTurretsShopOpened)
+      {
+         HideTurretsShopUI();
+      }
    }
 
    private void ShowTurretsShopUI()
    {
+      isTurretsShopOpened = true;
       turretsShop.GetComponent<Animation>().Play("Show Turrets Shop");
    }
 
    public void HideTurretsShopUI()
    {
+      isTurretsShopOpened = false;
       selectedTile.OnExit();
-
       hoveredTile = null;
       selectedTile = null;
-
       turretsShop.GetComponent<Animation>().Play("Hide Turrets Shop");
    }
 
