@@ -17,9 +17,8 @@ public class Enemy : MonoBehaviour
    private float nextAttackDelay;  //contatore del tempo per il prossimo attacco
    public int droppedResources = 20;  //risorse che vengono guadagnate all'uccisione
    public int pathNumber;
-   private Path path;
+   //private Path path;
    private bool isDead;
-
    // UI elements
    //public Text damageText;
    //public Image hpBar;
@@ -27,12 +26,20 @@ public class Enemy : MonoBehaviour
    private GameManager gameManager;
    private Animator animator;
    private NavMeshAgent nav;
+   private Base targetBase;
 
+   public Base TargetBase
+   {
+      set
+      {
+         targetBase = value;
+      }
+   }
 
    public virtual void Start()
    {
-      hp = maxHp; //inizializza la vita
-      path = GameObject.Find("Path " + pathNumber).GetComponent<Path>();
+      hp = maxHp;
+      //path = GameObject.Find("Path " + pathNumber).GetComponent<Path>();
       isDead = false;
       nextAttackDelay = attackDelay;
 
@@ -40,9 +47,16 @@ public class Enemy : MonoBehaviour
       animator = transform.GetChild(0).GetComponent<Animator>();
       nav = GetComponent<NavMeshAgent>();
       nav.speed = speed;
-      nav.SetDestination(path.Waypoints[path.Waypoints.Length - 1].position);
 
-      transform.LookAt(path.GetComponent<Path>().Waypoints[0]);
+      //transform.LookAt(path.GetComponent<Path>().Waypoints[0]);
+
+      // Game Manager should assign it when enemies gets spawned but in case it hasen't done yet enemy will find the base itself
+      if (!targetBase)
+      {
+         GameObject.Find("Base");
+      }
+
+      nav.SetDestination(targetBase.transform.position);
    }
 
    void Update()
@@ -50,6 +64,26 @@ public class Enemy : MonoBehaviour
       //hpBar.transform.LookAt(gameManager.transform);  //la barra della vita punta verso la camera
       if (!isDead)
       {
+         if (Vector3.Distance(transform.position, targetBase.transform.position) < attackRange)
+         {
+            //Debug.Log("Enemy in Range!");
+
+            nav.enabled = false;
+            animator.SetTrigger("Base Reached");
+
+            if (nextAttackDelay > 0)
+            {
+               nextAttackDelay -= Time.deltaTime;
+            }
+            else
+            {
+               Attack();
+               nextAttackDelay = attackDelay;
+            }
+         }
+
+
+         /*
          if (pathPoint < path.Waypoints.Length)
          {
             Move();
@@ -62,6 +96,7 @@ public class Enemy : MonoBehaviour
 
             animator.SetTrigger("Base Reached");
          }
+         */
       }
    }
 
@@ -101,19 +136,13 @@ public class Enemy : MonoBehaviour
       isDead = true;
       GetComponent<Collider>().enabled = false;
       nav.enabled = false;
-      gameManager.resources += droppedResources;
+      gameManager.OnEnemyKill(this);
       animator.SetTrigger("Dead");
       Destroy(gameObject, animator.GetCurrentAnimatorClipInfo(0)[0].clip.length + 1);
    }
-
-   private float Distance(Transform target)
-   {
-      return (float)System.Math.Sqrt(System.Math.Pow(target.position.x - gameObject.transform.position.x, 2)
-                                   + System.Math.Pow(target.position.z - gameObject.transform.position.z, 2));
-   }
-
    private void Attack()
    {
-      // TODO Attack Logic
+      Debug.Log("Enemy Attack");
+      targetBase.TakeDamage(damage);
    }
 }

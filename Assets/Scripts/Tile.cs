@@ -5,7 +5,7 @@ public class Tile : MonoBehaviour
 {
 
    private bool taken = false;
-   private Renderer renderer;
+   private new Renderer renderer;
 
    public bool Taken
    {

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using System.Collections.Generic;
 
 
@@ -9,28 +10,19 @@ public class GameManager : MonoBehaviour
 
    #region Fields
 
-   private Camera mainCamera;
-   private Transform objectHit;
-   public GameObject selectedTurret;
-   public int resources = 100;
-   private bool isPaused;
+
+   // public GameObject selectedTurret;
+
+   public Base playerBase;
 
    [Header("Waves Design")]
    public Transform[] spawnPoints;
    public Wave[] waves;
-   private Stack<Wave> wavesStack;
-
-   private Wave currentWave;
-   private int enemyIndex;
-   private float nextWaveTime;
-   private float nextEnemyTime;
-
-   private Tile hoveredTile;
-   private Tile selectedTile;
 
    [Header("UI")]
    public GameObject playInterface;
    public GameObject pauseInterface;
+   public GameObject turretsShop;
    public Text resourcesText;
    public Text nameText;
    public Text descriptionText;
@@ -38,7 +30,19 @@ public class GameManager : MonoBehaviour
    public Text attacksPerSecondText;
    public Text rangeText;
    public Text pauseText;
-   public GameObject turretsShop;
+   public GameObject gameoverText;
+
+
+   private bool isPaused;
+   private int resources = 100;
+   private Camera mainCamera;
+   private Stack<Wave> wavesStack;
+   private Wave currentWave;
+   private int enemyIndex;
+   private float nextWaveTime;
+   private float nextEnemyTime;
+   private Tile hoveredTile;
+   private Tile selectedTile;
 
    #endregion
 
@@ -94,7 +98,14 @@ public class GameManager : MonoBehaviour
          }
          else
          {
-            SpawnEnemy();
+            if (enemyIndex < currentWave.enemies.Length)
+            {
+               SpawnEnemy();
+               nextEnemyTime = currentWave.spawnDelay;
+               enemyIndex++;
+            }
+            else if (wavesStack.Count > 0)
+               NextWave();
          }
       }
 
@@ -102,19 +113,8 @@ public class GameManager : MonoBehaviour
 
    private void SpawnEnemy()
    {
-      Instantiate(currentWave.enemies[enemyIndex], spawnPoints[Random.Range(0, spawnPoints.Length)]);
-      nextEnemyTime = currentWave.spawnDelay;
-      enemyIndex++;
-
-      if (enemyIndex >= currentWave.enemies.Length)
-      {
-         /*if (enemySetIndex < currentWave.enemies.Length)
-         {
-
-         }*/
-         NextWave();
-      }
-
+      Enemy newEnemy = Instantiate(currentWave.enemies[enemyIndex], spawnPoints[Random.Range(0, spawnPoints.Length)]).GetComponent<Enemy>();
+      newEnemy.TargetBase = playerBase;
    }
 
    private void NextWave()
@@ -126,9 +126,14 @@ public class GameManager : MonoBehaviour
       nextEnemyTime = currentWave.spawnDelay;
    }
 
-   public void GameOver()
+   public void OnEnemyKill(Enemy killedEnemy)
    {
-      //TODO Game Over Logic
+      resources += killedEnemy.droppedResources;
+   }
+
+   public void OnGameOver()
+   {
+      gameoverText.SetActive(true);
    }
 
    #endregion
@@ -138,53 +143,48 @@ public class GameManager : MonoBehaviour
 
    private void ManageInputs()
    {
-      RaycastHit hit;
-
-      /*
-      if (!Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 100) && !hit.transform)
+      if (!isPaused)
       {
-         return;
-      }
-      */
+         RaycastHit hit;
 
-      if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 100) && hit.collider.tag == "Tile")
-      {
-         if (!selectedTile)
+         /*
+         if (!Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 100) && !hit.transform)
          {
-            if (!hoveredTile)
+            return;
+         }
+         */
+
+         if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 100) && hit.collider.tag == "Tile")
+         {
+            if (!selectedTile)
             {
-               hoveredTile = hit.transform.GetComponent<Tile>();
-               hoveredTile.OnHover();
+               if (!hoveredTile)
+               {
+                  hoveredTile = hit.transform.GetComponent<Tile>();
+                  hoveredTile.OnHover();
+               }
+               else if (!Transform.Equals(hoveredTile.transform, hit.transform))
+               {
+                  hoveredTile.OnExit();
+                  hoveredTile = hit.transform.GetComponent<Tile>();
+                  hoveredTile.OnHover();
+               }
             }
-            else if (!Transform.Equals(hoveredTile.transform, hit.transform))
+
+            if (Input.GetMouseButtonDown(0))
             {
-               hoveredTile.OnExit();
-               hoveredTile = hit.transform.GetComponent<Tile>();
-               hoveredTile.OnHover();
+               onMouseLeftClick(hit);
             }
          }
-      }
-      /*else
-      {
-         if (hoveredTile)
-         {
-            hoveredTile.OnExit();
-            hoveredTile = null;
-            //HideTurretsShopUI();
-         }
-      }*/
 
-      if (Input.GetMouseButtonDown(0) && !isPaused)
-      {
-         onMouseLeftClick(hit);
-      }
-      else if (Input.GetKeyDown(KeyCode.Escape) && !isPaused)
-      {
-         OnPause();
-      }
-      else if (Input.GetKeyDown(KeyCode.Escape) && isPaused)
-      {
-         OnPlay();
+         if (Input.GetKeyDown(KeyCode.Escape))
+         {
+            OnPause();
+         }
+         else if (Input.GetKeyDown(KeyCode.Escape))
+         {
+            OnPlay();
+         }
       }
    }
 
@@ -202,6 +202,20 @@ public class GameManager : MonoBehaviour
    }
    */
 
+   private void onMouseLeftClick(RaycastHit hit)
+   {
+      if (hit.collider.tag == "Tile" /*&& selectedTurret != null*/ && hit.collider.GetComponent<Tile>().Taken == false /*&& resources >= selectedTurret.GetComponent<Turret>().cost*/)
+      {
+         /*Instantiate(selectedTurret, hit.collider.transform.position + Vector3.up, new Quaternion());
+         resources -= selectedTurret.GetComponent<Turret>().cost;
+         hit.collider.GetComponent<Tile>().Taken = true;*/
+         if (selectedTile) selectedTile.OnExit();
+         selectedTile = hit.transform.GetComponent<Tile>();
+         selectedTile.OnSelect();
+         ShowTurretsShopUI();
+      }
+   }
+
    public void OnTurretBuy(GameObject turretGO)
    {
       if (selectedTile)
@@ -216,24 +230,11 @@ public class GameManager : MonoBehaviour
       }
    }
 
-   public void PlaceTurret(GameObject turretGO)
+   public void PlaceTurret(GameObject turretGameObject)
    {
-      Instantiate(turretGO, selectedTile.transform);
+      Instantiate(turretGameObject, selectedTile.transform);
       selectedTile.OnTake();
-   }
-
-   private void onMouseLeftClick(RaycastHit hit)
-   {
-      if (hit.collider.tag == "Tile" && selectedTurret != null && hit.collider.GetComponent<Tile>().Taken == false && resources >= selectedTurret.GetComponent<Turret>().cost)
-      {
-         /*Instantiate(selectedTurret, hit.collider.transform.position + Vector3.up, new Quaternion());
-         resources -= selectedTurret.GetComponent<Turret>().cost;
-         hit.collider.GetComponent<Tile>().Taken = true;*/
-         if (selectedTile) selectedTile.OnExit();
-         selectedTile = hit.transform.GetComponent<Tile>();
-         selectedTile.OnSelect();
-         ShowTurretsShopUI();
-      }
+      HideTurretsShopUI();
    }
 
    private void ShowTurretsShopUI()
@@ -243,6 +244,8 @@ public class GameManager : MonoBehaviour
 
    public void HideTurretsShopUI()
    {
+      selectedTile.OnExit();
+
       hoveredTile = null;
       selectedTile = null;
 

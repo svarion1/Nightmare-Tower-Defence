@@ -12,11 +12,6 @@ public class Turret : MonoBehaviour
    public int maxExperience = 300; //la torretta può salire di livello al rggiungimento del valore impostato
    public string description = "This is a turret";
    public GameObject head, barrel, projectile;  //parti della torretta
-   public GameObject leveledUpVersion;  //la torreta che viene sostituita al passaggio di livello
-
-   public Button levelUpButton;
-   public GameObject experienceBar;
-   public Image bar;
 
    protected GameObject gameManager;
    protected float initialTime, nextAttackTime;
@@ -54,19 +49,19 @@ public class Turret : MonoBehaviour
       if (colliders != null && colliders.Length > 0)
       {
          if (head != null && colliders[0] != null)
+         {
             head.transform.LookAt(colliders[0].transform);
-
-         /*if(barraExp)
-				barraExp.transform.LookAt(gestioneGioco.transform);*/
+         }
       }
    }
 
-
+   /*
    void OnDrawGizmos()
    {
       Gizmos.color = Color.yellow;
       Gizmos.DrawWireSphere(transform.position, attackRange);
    }
+   */
 
    private void FindEnemies()
    {
@@ -93,15 +88,5 @@ public class Turret : MonoBehaviour
       projectile.GetComponent<Projectile>().damage = damage;
       projectile.GetComponent<Projectile>().target = target;
       GameObject.Instantiate(projectile, barrel.transform.position, head.transform.rotation);
-
-      if (experience < maxExperience)
-      {
-         experience++;
-         bar.transform.localScale = new Vector3(1 / maxExperience * experience, bar.transform.localScale.y, bar.transform.localScale.z);
-         if (experience >= maxExperience)
-         {
-            levelUpButton.interactable = true;
-         }
-      }
    }
 }
