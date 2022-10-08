@@ -36,7 +36,7 @@ public class Tile : MonoBehaviour
 
    public void OnExit()
    {
-      renderer.material.SetColor("_Color", new Color(1f, 1f, 1f, 0.15f));
+      renderer.material.SetColor("_Color", new Color(1f, 1f, 1f, 0.02f));
       renderer.material.SetColor("_EmissionColor", new Color(1f, 1f, 1f, 1f));
    }
 
