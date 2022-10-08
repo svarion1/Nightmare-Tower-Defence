@@ -951,7 +951,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -160}
   m_SizeDelta: {x: 0, y: 500}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!111 &864322958
@@ -3199,11 +3199,6 @@ PrefabInstance:
       propertyPath: bar
       value: 
       objectReference: {fileID: 16381198}
-    - target: {fileID: 3946592484053077780, guid: 21e92f8b8b58b87478e54cd086be7c8b,
-        type: 3}
-      propertyPath: damage
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3946592484053077780, guid: 21e92f8b8b58b87478e54cd086be7c8b,
         type: 3}
       propertyPath: projectile
