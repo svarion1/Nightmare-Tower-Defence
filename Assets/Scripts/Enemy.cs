@@ -81,6 +81,10 @@ public class Enemy : MonoBehaviour
                nextAttackDelay = attackDelay;
             }
          }
+         else
+         {
+            nav.SetDestination(targetBase.transform.position);
+         }
 
 
          /*
