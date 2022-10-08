@@ -47,11 +47,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdf5ff6da109e6342846f3698e7c1a3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 3
   damageReduction: 0.055
   maxHp: 100
-  damage: 5
-  attackRange: 1
+  damage: 25
+  attackRange: 2
   attackDelay: 3
   droppedResources: 20
   pathNumber: 1
