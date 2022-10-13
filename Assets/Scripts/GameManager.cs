@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System.Collections.Generic;
 
 
 //WARNING!!! Attach this component to Main Camera
@@ -32,14 +31,14 @@ public class GameManager : MonoBehaviour
    public Text pauseText;
    public GameObject gameoverText;
 
-
    private bool isPaused;
+   private bool isWon;
    private bool isTurretsShopOpened;
    private int resources = 100;
    private Camera mainCamera;
-   private Stack<Wave> wavesStack;
-   private Wave currentWave;
-   private int enemyIndex;
+   //private Stack<Wave> wavesStack;
+   private int waveIndex;
+   //private int enemyIndex;
    private float nextWaveTime;
    private float nextEnemyTime;
    private Tile hoveredTile;
@@ -54,17 +53,21 @@ public class GameManager : MonoBehaviour
    {
       mainCamera = Camera.main;
       isPaused = false;
+      isWon = false;
 
-      wavesStack = new Stack<Wave>();
+      waveIndex = 0;
 
+      //wavesStack = new Stack<Wave>();
+
+      /*
       for (int i = waves.Length - 1; i >= 0; i--)
       {
          wavesStack.Push(waves[i]);
       }
+      */
 
-      currentWave = wavesStack.Pop();
-      enemyIndex = 0;
-      nextWaveTime = currentWave.startDelay;
+      //currentWave = wavesStack.Pop();
+      //enemyIndex = 0;
 
       /*
       hoveredTile = GameObject.Find("Tile 1").GetComponent<Tile>();
@@ -81,50 +84,55 @@ public class GameManager : MonoBehaviour
    {
       //resourcesText.text = "Resources: " + resources;
 
+      Debug.Log("Wave Index: " + waveIndex);
+
       ManageSpawn();
       ManageInputs();
    }
 
    private void ManageSpawn()
    {
-      if (nextWaveTime > 0)
+      if (!isWon)
       {
-         nextWaveTime -= Time.deltaTime;
-      }
-      else
-      {
-         if (nextEnemyTime > 0)
+         if (nextWaveTime > 0)
          {
-            nextEnemyTime -= Time.deltaTime;
+            nextWaveTime -= Time.deltaTime;
          }
          else
          {
-            if (enemyIndex < currentWave.enemies.Length)
+            if (nextEnemyTime > 0)
+            {
+               nextEnemyTime -= Time.deltaTime;
+            }
+            else
             {
                SpawnEnemy();
-               nextEnemyTime = currentWave.spawnDelay;
-               enemyIndex++;
+               nextEnemyTime = waves[waveIndex].spawnDelay;
             }
-            else if (wavesStack.Count > 0)
-               NextWave();
          }
       }
-
    }
 
    private void SpawnEnemy()
    {
-      Enemy newEnemy = Instantiate(currentWave.enemies[enemyIndex], spawnPoints[Random.Range(0, spawnPoints.Length)]).GetComponent<Enemy>();
-      newEnemy.TargetBase = playerBase;
+      GameObject newEnemy = waves[waveIndex].Next();
+
+      if (!newEnemy)
+      {
+         NextWave();
+         return;
+      }
+
+      Instantiate(newEnemy, spawnPoints[Random.Range(0, spawnPoints.Length)]).GetComponent<Enemy>().TargetBase = playerBase;
    }
 
    private void NextWave()
    {
-      currentWave = wavesStack.Pop();
-      enemyIndex = 0;
+      if (waveIndex < waves.Length)
+         waveIndex++;
+      else
+         isWon = true;
 
-      nextWaveTime = currentWave.startDelay;
-      nextEnemyTime = currentWave.spawnDelay;
    }
 
    public void OnEnemyKill(Enemy killedEnemy)
@@ -155,7 +163,7 @@ public class GameManager : MonoBehaviour
          }
          */
 
-         if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 100) && hit.collider.tag == "Tile" && hit.collider.GetComponent<Tile>().Taken == false)
+         if (Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit, 100) && hit.collider.CompareTag("Tile") && hit.collider.GetComponent<Tile>().Taken == false)
          {
             if (!selectedTile)
             {
@@ -174,7 +182,7 @@ public class GameManager : MonoBehaviour
 
             if (Input.GetMouseButtonDown(0))
             {
-               onMouseLeftClick(hit);
+               OnMouseLeftClick(hit);
             }
          }
 
@@ -203,9 +211,9 @@ public class GameManager : MonoBehaviour
    }
    */
 
-   private void onMouseLeftClick(RaycastHit hit)
+   private void OnMouseLeftClick(RaycastHit hit)
    {
-      if (hit.collider.tag == "Tile" /*&& selectedTurret != null /*&& resources >= selectedTurret.GetComponent<Turret>().cost*/)
+      if (hit.collider.CompareTag("Tile") /*&& selectedTurret != null /*&& resources >= selectedTurret.GetComponent<Turret>().cost*/)
       {
          /*Instantiate(selectedTurret, hit.collider.transform.position + Vector3.up, new Quaternion());
          resources -= selectedTurret.GetComponent<Turret>().cost;
@@ -220,16 +228,16 @@ public class GameManager : MonoBehaviour
       }
    }
 
-   public void OnTurretBuy(GameObject turretGO)
+   public void OnTurretBuy(GameObject turretGameObject)
    {
       if (selectedTile)
       {
-         Turret turret = turretGO.GetComponent<Turret>();
+         Turret turret = turretGameObject.GetComponent<Turret>();
 
          if (turret.cost <= resources)
          {
             resources -= turret.cost;
-            PlaceTurret(turretGO);
+            PlaceTurret(turretGameObject);
          }
       }
    }
