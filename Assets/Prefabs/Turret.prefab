@@ -58,10 +58,6 @@ MonoBehaviour:
   head: {fileID: 3946592484700262488}
   barrel: {fileID: 3946592484086843773}
   projectile: {fileID: 0}
-  leveledUpVersion: {fileID: 0}
-  levelUpButton: {fileID: 0}
-  experienceBar: {fileID: 0}
-  bar: {fileID: 0}
 --- !u!1 &3946592484086843773
 GameObject:
   m_ObjectHideFlags: 0
