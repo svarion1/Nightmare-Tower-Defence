@@ -213,7 +213,7 @@ public class GameManager : MonoBehaviour
 
    private void OnMouseLeftClick(RaycastHit hit)
    {
-      if (hit.collider.CompareTag("Tile") /*&& selectedTurret != null /*&& resources >= selectedTurret.GetComponent<Turret>().cost*/)
+      if (!isTurretsShopOpened && hit.collider.CompareTag("Tile") /*&& selectedTurret != null /*&& resources >= selectedTurret.GetComponent<Turret>().cost*/)
       {
          /*Instantiate(selectedTurret, hit.collider.transform.position + Vector3.up, new Quaternion());
          resources -= selectedTurret.GetComponent<Turret>().cost;
@@ -225,6 +225,10 @@ public class GameManager : MonoBehaviour
          {
             ShowTurretsShopUI();
          }
+      }
+      else
+      {
+         HideTurretsShopUI();
       }
    }
 
