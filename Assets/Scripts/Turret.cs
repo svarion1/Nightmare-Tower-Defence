@@ -30,6 +30,7 @@ public class Turret : MonoBehaviour
    // Update is called once per frame
    public virtual void Update()
    {
+      /*
       if (nextAttackTime > 0)
       {
          nextAttackTime -= Time.deltaTime;
@@ -45,7 +46,10 @@ public class Turret : MonoBehaviour
             nextAttackTime = initialTime;
          }
       }
-
+      */
+      
+      FindEnemies();
+      
       if (colliders != null && colliders.Length > 0)
       {
          if (head != null && colliders[0] != null)
@@ -54,19 +58,15 @@ public class Turret : MonoBehaviour
          }
       }
    }
-
-   /*
+   
    void OnDrawGizmos()
    {
       Gizmos.color = Color.yellow;
       Gizmos.DrawWireSphere(transform.position, attackRange);
    }
-   */
 
    private void FindEnemies()
    {
-
-
       if (nextAttackTime > 0)
       {
          nextAttackTime -= Time.deltaTime;
