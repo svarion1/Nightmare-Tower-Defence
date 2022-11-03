@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
    public GameObject gameoverText;
 
    private bool isPaused;
-   private bool isWon;
+   private bool isFinished; // When the last wave finishes it is set to true
    private bool isTurretsShopOpened;
    private int resources = 100;
    private Camera mainCamera;
@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
    {
       mainCamera = Camera.main;
       isPaused = false;
-      isWon = false;
+      isFinished = false;
 
       waveIndex = 0;
 
@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
    {
       //resourcesText.text = "Resources: " + resources;
 
-      Debug.Log("Wave Index: " + waveIndex);
+      //Debug.Log("Wave Index: " + waveIndex);
 
       ManageSpawn();
       ManageInputs();
@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour
 
    private void ManageSpawn()
    {
-      if (!isWon)
+      if (!isFinished)
       {
          if (nextWaveTime > 0)
          {
@@ -107,7 +107,8 @@ public class GameManager : MonoBehaviour
             else
             {
                SpawnEnemy();
-               nextEnemyTime = waves[waveIndex].spawnDelay;
+               if(!isFinished)
+                  nextEnemyTime = waves[waveIndex].spawnDelay;
             }
          }
       }
@@ -127,12 +128,11 @@ public class GameManager : MonoBehaviour
    }
 
    private void NextWave()
-   {
-      if (waveIndex < waves.Length)
-         waveIndex++;
-      else
-         isWon = true;
-
+   { 
+      waveIndex++;
+      
+      if (waveIndex >= waves.Length)
+         isFinished = true;
    }
 
    public void OnEnemyKill(Enemy killedEnemy)
