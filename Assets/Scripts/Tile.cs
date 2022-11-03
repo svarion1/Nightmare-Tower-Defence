@@ -22,14 +22,14 @@ public class Tile : MonoBehaviour
 
    public void OnHover()
    {
-      Debug.Log("Hovered Tile");
+      //Debug.Log("Hovered Tile");
       renderer.material.SetColor("_Color", new Color(1f, 1f, 1f, 0.5f));
       renderer.material.SetColor("_EmissionColor", new Color(1f, 1f, 1f, 1f));
    }
 
    public void OnSelect()
    {
-      Debug.Log("Selected Tile");
+      //Debug.Log("Selected Tile");
       renderer.material.SetColor("_Color", new Color(1f, 1f, 1f, 0.5f));
       renderer.material.SetColor("_EmissionColor", new Color(0f, 0.25f, 0.95f, 1f));
    }
