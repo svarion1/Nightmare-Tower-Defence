@@ -31,6 +31,10 @@ public class Base : MonoBehaviour
    public void TakeDamage(int damage)
    {
       hp -= damage;
+      
+      // Something is missing here, what could it be?
+      
+      
       GameOverCheck();
    }
 
@@ -42,8 +46,9 @@ public class Base : MonoBehaviour
 
    private void UpdateHpUI()
    {
-      int count = hpIndicator.childCount;
-      int intactLightbulbs = count / (maxHp * hp);
+      //maxHP : count = hp : x
+      float count = hpIndicator.childCount;
+      float intactLightbulbs = (count * hp) / maxHp;
 
       for (int i = 0; i < count; i++)
       {
