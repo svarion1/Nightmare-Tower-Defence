@@ -188,7 +188,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   damageReduction: 0.055
-  maxHp: 100
+  maxHp: 200
   damage: 25
   attackRange: 2
   attackDelay: 3
