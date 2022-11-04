@@ -12,8 +12,6 @@ public class GameManager : MonoBehaviour
 
    // public GameObject selectedTurret;
 
-   public int initialResources = 100;
-
    public Base playerBase;
 
    [Header("Waves Design")]
@@ -36,7 +34,7 @@ public class GameManager : MonoBehaviour
    private bool isPaused;
    private bool isFinished; // When the last wave finishes it is set to true
    private bool isTurretsShopOpened;
-   private int resources;
+   private int resources = 100;
    private Camera mainCamera;
    //private Stack<Wave> wavesStack;
    private int waveIndex;
@@ -59,8 +57,6 @@ public class GameManager : MonoBehaviour
 
       waveIndex = 0;
 
-
-      resources = initialResources;
       //wavesStack = new Stack<Wave>();
 
       /*
@@ -224,17 +220,16 @@ public class GameManager : MonoBehaviour
          hit.collider.GetComponent<Tile>().Taken = true;*/
          if (selectedTile) selectedTile.OnExit();
          selectedTile = hit.transform.GetComponent<Tile>();
-         Debug.Log("Just selected tile");
          selectedTile.OnSelect();
          if (!isTurretsShopOpened)
          {
             ShowTurretsShopUI();
          }
       }
-      /*else  // This chunck of code may cause bugs
+      else
       {
          HideTurretsShopUI();
-      }*/
+      }
    }
 
    public void OnTurretBuy(GameObject turretGameObject)
@@ -253,7 +248,6 @@ public class GameManager : MonoBehaviour
 
    public void PlaceTurret(GameObject turretGameObject)
    {
-      Debug.Log("Placing Turret");
       Instantiate(turretGameObject, selectedTile.transform);
       selectedTile.OnTake();
 
@@ -275,7 +269,6 @@ public class GameManager : MonoBehaviour
       selectedTile.OnExit();
       hoveredTile = null;
       selectedTile = null;
-      Debug.Log("Nulled selected tile");
       turretsShop.GetComponent<Animation>().Play("Hide Turrets Shop");
    }
 

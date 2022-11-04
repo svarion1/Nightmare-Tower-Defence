@@ -32,7 +32,7 @@ public class Base : MonoBehaviour
    {
       hp -= damage;
       
-      // Something is missing here, what could it be?
+      UpdateHpUI();
       
       
       GameOverCheck();
