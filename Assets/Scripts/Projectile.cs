@@ -17,7 +17,7 @@ public class Projectile : MonoBehaviour
       if (target)
       {
          transform.LookAt(target);
-         transform.Translate(Vector3.forward * speed * Time.deltaTime);
+         transform.Translate( speed * Time.deltaTime * Vector3.forward);
       }
       else Destroy(gameObject);
    }
