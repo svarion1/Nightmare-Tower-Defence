@@ -4,15 +4,30 @@ using UnityEngine;
 
 public class AreaDamageTurret : Turret
 {
-    protected override void FindEnemies()
+    protected override void NextAttackUpdate()
     {
-        int maxColliders = 10;
-        Collider[] hitColliders = new Collider[maxColliders];
-        int numColliders = Physics.OverlapSphereNonAlloc(transform.position, attackRange, hitColliders, enemiesMask);
-
-        for (int i = 0; i < numColliders; i++)
+        if (nextAttackTime > 0)
         {
-            hitColliders[i].GetComponent<Enemy>().TakeDamage(damage);
+            nextAttackTime -= Time.deltaTime;
+        }
+        else if (nextAttackTime <= 0)
+        {
+            FindEnemies();
+         
+            if (enemyColliders.Length > 0)
+            {
+                // Shoots to the every enemy in range then reset the attack time
+                Shoot();
+                nextAttackTime = initialTime;
+            }
+        }
+    }
+
+    protected void Shoot()
+    {
+        foreach (var c in enemyColliders)
+        {
+            c.GetComponent<Enemy>().TakeDamage(damage);
         }
     }
 }

@@ -41,7 +41,7 @@ public class Turret : MonoBehaviour
       }
    }
 
-   protected void NextAttackUpdate()
+   protected virtual void NextAttackUpdate()
    {
       if (nextAttackTime > 0)
       {
