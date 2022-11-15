@@ -232,7 +232,7 @@ public class GameManager : MonoBehaviour
       }
    }
 
-   public void OnTurretBuy(GameObject turretGameObject)
+   public void BuyTurret(GameObject turretGameObject)
    {
       if (selectedTile)
       {
