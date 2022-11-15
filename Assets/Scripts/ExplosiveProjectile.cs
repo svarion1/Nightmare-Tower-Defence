@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AreaDamageProjectile : Projectile
+public class ExplosiveProjectile : Projectile
 {
     public float damageRadius = 3f;
     public LayerMask enemyLayer;
