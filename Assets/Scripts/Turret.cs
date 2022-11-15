@@ -16,7 +16,7 @@ public class Turret : MonoBehaviour
    protected GameObject gameManager;
    protected float initialTime, nextAttackTime;
    protected int experience;
-   protected Collider[] colliders;
+   protected Collider[] enemyColliders;
 
    // Use this for initialization
    protected void Awake()
@@ -32,11 +32,11 @@ public class Turret : MonoBehaviour
    {
       FindEnemies();
       
-      if (colliders != null && colliders.Length > 0)
+      if (enemyColliders != null && enemyColliders.Length > 0)
       {
-         if (head != null && colliders[0] != null)
+         if (head != null && enemyColliders[0] != null)
          {
-            head.transform.LookAt(colliders[0].transform);
+            head.transform.LookAt(enemyColliders[0].transform);
          }
       }
    }
@@ -50,18 +50,19 @@ public class Turret : MonoBehaviour
       else if (nextAttackTime <= 0)
       {
          FindEnemies();
+         
+         if (enemyColliders.Length > 0)
+         {
+            // Shoots to the nearest enemy then reset the attack time
+            Shoot(enemyColliders[0].transform);
+            nextAttackTime = initialTime;
+         }
       }
    }
    
    protected virtual void FindEnemies()
    {
-      colliders = Physics.OverlapSphere(transform.position, attackRange, enemiesMask);
-
-      if (colliders.Length > 0)
-      {
-         Shoot(colliders[0].transform);
-         nextAttackTime = initialTime;
-      }
+      enemyColliders = Physics.OverlapSphere(transform.position, attackRange, enemiesMask);
    }
 
    protected virtual void Shoot(Transform target)
