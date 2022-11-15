@@ -246,7 +246,7 @@ public class GameManager : MonoBehaviour
       }
    }
 
-   public void PlaceTurret(GameObject turretGameObject)
+   private void PlaceTurret(GameObject turretGameObject)
    {
       Instantiate(turretGameObject, selectedTile.transform);
       selectedTile.OnTake();
