@@ -5,14 +5,15 @@ using UnityEngine;
 public class ContinuousDamage : MonoBehaviour
 {
     public float duration;
-    public float damageEvery;
-    public float nextDamage;
-    public float damage;
+    public float tickDuration;
+    public float tickDamage;
 
+    public float nextTick;
     private Enemy attachedEnemy;
     
-    void Start () {
-        nextDamage = damageEvery;
+    void Start ()
+    {
+        nextTick = tickDuration;
         attachedEnemy = GetComponent<Enemy>();
     }
     
@@ -20,11 +21,12 @@ public class ContinuousDamage : MonoBehaviour
         duration -= Time.deltaTime;
         if (duration >0)
         {
-            nextDamage -= Time.deltaTime;
-            if(nextDamage <= 0)
+            nextTick -= Time.deltaTime;
+            if(nextTick <= 0)
             {
-                attachedEnemy.TakeDamage(damage);
-                nextDamage = damageEvery;
+                Debug.Log("Tick");
+                attachedEnemy.TakeDamage(tickDamage);
+                nextTick = tickDuration;
             }
         }
         else
