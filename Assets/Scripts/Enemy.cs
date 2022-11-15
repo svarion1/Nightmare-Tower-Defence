@@ -17,6 +17,9 @@ public class Enemy : MonoBehaviour
    private float nextAttackDelay;  //contatore del tempo per il prossimo attacco
    public int droppedResources = 20;  //risorse che vengono guadagnate all'uccisione
    public int pathNumber;
+
+   public Image healthBar;
+   
    //private Path path;
    private bool isDead;
    // UI elements
@@ -53,7 +56,7 @@ public class Enemy : MonoBehaviour
       // Game Manager should assign it when enemies gets spawned but in case it hasen't done yet enemy will find the base itself
       if (!targetBase)
       {
-         GameObject.Find("Base");
+         targetBase = GameObject.Find("Environment/Base").GetComponent<Base>();
       }
 
       nav.SetDestination(targetBase.transform.position);
@@ -122,6 +125,8 @@ public class Enemy : MonoBehaviour
    {
       hp -= Mathf.RoundToInt(damage * (1 - damageReduction));
 
+      healthBar.fillAmount =  (float)(hp * (1f / maxHp));
+      
       if (hp < 0)
       {
          hp = 0;
