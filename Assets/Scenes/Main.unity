@@ -132,18 +132,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 7599910298441583675}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &555694384 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8411584649231825979, guid: 5489dc41da9b4464a91b6a506495c559,
-    type: 3}
-  m_PrefabInstance: {fileID: 1635992334}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 069d4c79a472772488288cd202102a95, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &654753749 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 654753749, guid: 5489dc41da9b4464a91b6a506495c559,
@@ -714,6 +702,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2746760413819840705, guid: 5489dc41da9b4464a91b6a506495c559,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6972674403974298368, guid: 5489dc41da9b4464a91b6a506495c559,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -950,7 +943,7 @@ PrefabInstance:
         type: 3}
       propertyPath: playerBase
       value: 
-      objectReference: {fileID: 555694384}
+      objectReference: {fileID: 0}
     - target: {fileID: 1000599957681411839, guid: 2c9c54424f9e05047982d1e88afeb5e3,
         type: 3}
       propertyPath: turretsShop
