@@ -52,7 +52,7 @@ public class Enemy : MonoBehaviour
 
       //transform.LookAt(path.GetComponent<Path>().Waypoints[0]);
 
-      // Game Manager should assign it when enemies gets spawned but in case it hasen't done yet enemy will find the base itself
+      // Game Manager should assign it when enemies gets spawned but in case it hasn't done yet enemy will find the base itself
       if (!targetBase)
       {
          GameObject.Find("Base");
