@@ -234,6 +234,8 @@ public class GameManager : MonoBehaviour
 
    public void BuyTurret(GameObject turretGameObject)
    {
+      Debug.Log("Buying turret...");
+      
       if (selectedTile)
       {
          Turret turret = turretGameObject.GetComponent<Turret>();
@@ -242,13 +244,16 @@ public class GameManager : MonoBehaviour
          {
             resources -= turret.cost;
             PlaceTurret(turretGameObject);
+            Debug.Log("Turret placed");
          }
       }
    }
 
    private void PlaceTurret(GameObject turretGameObject)
    {
-      Instantiate(turretGameObject, selectedTile.transform);
+      GameObject newTurret = Instantiate(turretGameObject, selectedTile.transform, true);
+      newTurret.transform.position = selectedTile.transform.position;
+      //turretGameObject.transform.position = selectedTile.transform.localPosition;
       selectedTile.OnTake();
 
       if (isTurretsShopOpened)
