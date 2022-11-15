@@ -2,6 +2,8 @@
 using UnityEngine.UI;
 using UnityEngine.AI;
 
+#// TODO Stop enemy further from player base in order to prevent overlapping inside it
+
 //questo script controlla i comportamenti dei nemici e lavora assieme allo script Navigazione
 public class Enemy : MonoBehaviour
 {
