@@ -450,7 +450,7 @@ MonoBehaviour:
   description: 
   head: {fileID: 7217238012812198316}
   barrel: {fileID: 8807000074438995804}
-  projectile: {fileID: 8334679796980189204, guid: 19fdf82d1c43db64e8fdab5068e449c7,
+  projectile: {fileID: 8334679796980189204, guid: 5f4d885d7f0e1d34ba76be564ec63c99,
     type: 3}
 --- !u!208 &1757497062
 NavMeshObstacle:
