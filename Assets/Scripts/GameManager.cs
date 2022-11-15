@@ -226,10 +226,10 @@ public class GameManager : MonoBehaviour
             ShowTurretsShopUI();
          }
       }
-      else
+      /*else
       {
          HideTurretsShopUI();
-      }
+      }*/
    }
 
    public void BuyTurret(GameObject turretGameObject)
