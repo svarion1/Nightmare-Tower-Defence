@@ -1,18 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BurningProjectile : Projectile
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public float duration = 3f;
+    public float tickDuration = 1f;
+    public float tickDamage = 10f;
 
-    // Update is called once per frame
-    void Update()
+    protected override void OnTriggerEnter(Collider other)
     {
-        
+        //Debug.Log("Projectile Collision");
+
+        if (other.CompareTag("Enemy"))
+        {
+            Enemy enemy = other.GetComponent<Enemy>();
+            ContinuousDamage cd = enemy.GetComponent<ContinuousDamage>();
+            
+            if (cd == null)
+            {
+              cd = enemy.AddComponent<ContinuousDamage>();
+            }
+
+            cd.duration = duration;
+            cd.tickDuration = tickDuration;
+            cd.tickDamage = tickDamage;
+            enemy.TakeDamage(damage);
+            
+            Destroy(gameObject);
+        }
     }
 }
