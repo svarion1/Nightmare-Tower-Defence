@@ -30,7 +30,7 @@ public class Turret : MonoBehaviour
    // Update is called once per frame
    public virtual void Update()
    {
-      FindEnemies();
+      NextAttackUpdate();
       
       if (enemyColliders != null && enemyColliders.Length > 0)
       {
