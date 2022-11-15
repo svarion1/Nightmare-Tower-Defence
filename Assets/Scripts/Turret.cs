@@ -19,7 +19,7 @@ public class Turret : MonoBehaviour
    protected Collider[] colliders;
 
    // Use this for initialization
-   void Awake()
+   protected void Awake()
    {
       gameManager = GameObject.Find("Main Camera");
       experience = 0;
@@ -59,13 +59,13 @@ public class Turret : MonoBehaviour
       }
    }
    
-   void OnDrawGizmos()
+   protected void OnDrawGizmos()
    {
       Gizmos.color = Color.yellow;
       Gizmos.DrawWireSphere(transform.position, attackRange);
    }
 
-   private void FindEnemies()
+   protected void FindEnemies()
    {
       if (nextAttackTime > 0)
       {
@@ -83,10 +83,11 @@ public class Turret : MonoBehaviour
       }
    }
 
-   virtual protected void Shoot(Transform target)
+   protected virtual void Shoot(Transform target)
    {
-      projectile.GetComponent<Projectile>().damage = damage;
-      projectile.GetComponent<Projectile>().target = target;
-      GameObject.Instantiate(projectile, barrel.transform.position, head.transform.rotation);
+      GameObject newProjectile = Instantiate(projectile, barrel.transform.position, head.transform.rotation);
+      newProjectile.GetComponent<Projectile>().damage = damage;
+      newProjectile.GetComponent<Projectile>().target = target;
+      
    }
 }
