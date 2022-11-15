@@ -55,7 +55,7 @@ public class Enemy : MonoBehaviour
       // Game Manager should assign it when enemies gets spawned but in case it hasn't done yet enemy will find the base itself
       if (!targetBase)
       {
-         GameObject.Find("Base");
+         targetBase = GameObject.Find("Environment/Base").GetComponent<Base>();
       }
 
       nav.SetDestination(targetBase.transform.position);
