@@ -53,7 +53,7 @@ public class Turret : MonoBehaviour
       }
    }
    
-   protected void FindEnemies()
+   protected virtual void FindEnemies()
    {
       colliders = Physics.OverlapSphere(transform.position, attackRange, enemiesMask);
 

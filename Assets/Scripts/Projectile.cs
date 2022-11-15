@@ -22,7 +22,7 @@ public class Projectile : MonoBehaviour
       else Destroy(gameObject);
    }
 
-   protected void OnTriggerEnter(Collider other)
+   protected virtual void OnTriggerEnter(Collider other)
    {
       //Debug.Log("Projectile Collision");
 

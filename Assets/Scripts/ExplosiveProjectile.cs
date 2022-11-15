@@ -5,7 +5,7 @@ public class ExplosiveProjectile : Projectile
     public float damageRadius = 3f;
     public LayerMask enemyLayer;
 
-    protected void OnTriggerEnter(Collider other)
+   protected override void OnTriggerEnter(Collider other)
    {
       //Debug.Log("Projectile Collision");
 
@@ -24,11 +24,10 @@ public class ExplosiveProjectile : Projectile
          Destroy(gameObject);
       }
    }
-
-/*
+   
    void OnDrawGizmos()
    {
-    Gizmos.Sphere(transform.position)
+      Gizmos.color = Color.red;
+      Gizmos.DrawSphere(transform.position, damageRadius);
    }
-   */
 }

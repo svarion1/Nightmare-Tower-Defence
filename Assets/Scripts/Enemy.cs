@@ -36,7 +36,7 @@ public class Enemy : MonoBehaviour
       }
    }
 
-   public virtual void Start()
+   void Start()
    {
       hp = maxHp;
       //path = GameObject.Find("Path " + pathNumber).GetComponent<Path>();
