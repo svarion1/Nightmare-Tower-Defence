@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
    private bool isPaused;
    private bool isFinished; // When the last wave finishes it is set to true
    private bool isTurretsShopOpened;
-   private int resources = 100;
+   private int resources = 10000;
    private Camera mainCamera;
    //private Stack<Wave> wavesStack;
    private int waveIndex;
