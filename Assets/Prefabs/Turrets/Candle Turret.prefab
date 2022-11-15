@@ -165,16 +165,16 @@ MonoBehaviour:
   enemiesMask:
     serializedVersion: 2
     m_Bits: 64
-  damage: 25
-  attackRange: 8
-  attacksPerSecond: 2
+  damage: 12
+  attackRange: 6
+  attacksPerSecond: 1
   cost: 100
   sellPrice: 50
   maxExperience: 300
-  description: 
+  description: This turret deals small damages over time
   head: {fileID: 1435252652604017619}
   barrel: {fileID: 6579027769681291811}
-  projectile: {fileID: 8334679796980189204, guid: 19fdf82d1c43db64e8fdab5068e449c7,
+  projectile: {fileID: 8334679796980189204, guid: 0c6f9e53a5cf3ad428fedf7caf646d4c,
     type: 3}
 --- !u!208 &152529844442894599
 NavMeshObstacle:
