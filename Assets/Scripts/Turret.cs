@@ -30,24 +30,6 @@ public class Turret : MonoBehaviour
    // Update is called once per frame
    public virtual void Update()
    {
-      /*
-      if (nextAttackTime > 0)
-      {
-         nextAttackTime -= Time.deltaTime;
-      }
-      else if (nextAttackTime <= 0)
-      {
-         colliders = Physics.OverlapSphere(transform.position, attackRange, enemiesMask);
-         Debug.Log(colliders.Length);
-
-         if (colliders.Length > 0)
-         {
-            Shoot(colliders[0].transform);
-            nextAttackTime = initialTime;
-         }
-      }
-      */
-      
       FindEnemies();
       
       if (colliders != null && colliders.Length > 0)
@@ -58,14 +40,8 @@ public class Turret : MonoBehaviour
          }
       }
    }
-   
-   protected void OnDrawGizmos()
-   {
-      Gizmos.color = Color.yellow;
-      Gizmos.DrawWireSphere(transform.position, attackRange);
-   }
 
-   protected void FindEnemies()
+   protected void NextAttackUpdate()
    {
       if (nextAttackTime > 0)
       {
@@ -73,13 +49,18 @@ public class Turret : MonoBehaviour
       }
       else if (nextAttackTime <= 0)
       {
-         colliders = Physics.OverlapSphere(transform.position, attackRange, enemiesMask);
+         FindEnemies();
+      }
+   }
+   
+   protected void FindEnemies()
+   {
+      colliders = Physics.OverlapSphere(transform.position, attackRange, enemiesMask);
 
-         if (colliders.Length > 0)
-         {
-            Shoot(colliders[0].transform);
-            nextAttackTime = initialTime;
-         }
+      if (colliders.Length > 0)
+      {
+         Shoot(colliders[0].transform);
+         nextAttackTime = initialTime;
       }
    }
 
@@ -89,5 +70,11 @@ public class Turret : MonoBehaviour
       newProjectile.GetComponent<Projectile>().damage = damage;
       newProjectile.GetComponent<Projectile>().target = target;
       
+   }
+   
+   protected void OnDrawGizmos()
+   {
+      Gizmos.color = Color.yellow;
+      Gizmos.DrawWireSphere(transform.position, attackRange);
    }
 }
