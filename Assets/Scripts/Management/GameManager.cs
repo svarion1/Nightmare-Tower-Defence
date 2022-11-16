@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
    private bool isPaused;
    private bool isFinished; // When the last wave finishes it is set to true
    private bool isTurretsShopOpened;
-   private int resources = 100;
+   private int resources = 10000;
    private Camera mainCamera;
    //private Stack<Wave> wavesStack;
    private int waveIndex;
@@ -227,14 +227,16 @@ public class GameManager : MonoBehaviour
             ShowTurretsShopUI();
          }
       }
-      else
+      /*else
       {
          HideTurretsShopUI();
-      }
+      }*/
    }
 
-   public void OnTurretBuy(GameObject turretGameObject)
+   public void BuyTurret(GameObject turretGameObject)
    {
+      Debug.Log("Buying turret...");
+      
       if (selectedTile)
       {
          Turret turret = turretGameObject.GetComponent<Turret>();
@@ -243,13 +245,16 @@ public class GameManager : MonoBehaviour
          {
             resources -= turret.cost;
             PlaceTurret(turretGameObject);
+            Debug.Log("Turret placed");
          }
       }
    }
 
-   public void PlaceTurret(GameObject turretGameObject)
+   private void PlaceTurret(GameObject turretGameObject)
    {
-      Instantiate(turretGameObject, selectedTile.transform);
+      GameObject newTurret = Instantiate(turretGameObject, selectedTile.transform, true);
+      newTurret.transform.position = selectedTile.transform.position;
+      //turretGameObject.transform.position = selectedTile.transform.localPosition;
       selectedTile.OnTake();
 
       if (isTurretsShopOpened)

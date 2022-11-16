@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5761093864903390581}
   - component: {fileID: 1854688134590819927}
   m_Layer: 5
-  m_Name: RadialHealthBar
+  m_Name: Radial Health Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

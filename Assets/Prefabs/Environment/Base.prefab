@@ -46,6 +46,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 0
+  hpIndicator: {fileID: 0}
+  intactLightbulb: {fileID: 0}
+  brokenLightbulb: {fileID: 0}
 --- !u!1 &4503672885164490791
 GameObject:
   m_ObjectHideFlags: 0
@@ -256,6 +259,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 775089748263884192}
     m_Modifications:
+    - target: {fileID: 6922205853000000228, guid: e8baa6b4d87c0794ca6c446a001594b9,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6922205853000000228, guid: e8baa6b4d87c0794ca6c446a001594b9,
         type: 3}
       propertyPath: m_Materials.Array.data[0]

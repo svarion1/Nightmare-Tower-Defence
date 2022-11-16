@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
+using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
@@ -7,23 +6,23 @@ public class Projectile : MonoBehaviour
    public float speed = 3.0f, damage = 25f, lifeTime = 4.0f;
    public Transform target;
 
-   void Start()
+   protected void Start()
    {
       Destroy(gameObject, lifeTime);
    }
 
    // Update is called once per frame
-   void Update()
+   protected void Update()
    {
       if (target)
       {
          transform.LookAt(target);
-         transform.Translate(Vector3.forward * speed * Time.deltaTime);
+         transform.Translate( speed * Time.deltaTime * Vector3.forward);
       }
       else Destroy(gameObject);
    }
 
-   void OnTriggerEnter(Collider other)
+   protected virtual void OnTriggerEnter(Collider other)
    {
       //Debug.Log("Projectile Collision");
 

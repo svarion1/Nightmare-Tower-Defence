@@ -2,6 +2,8 @@
 using UnityEngine.UI;
 using UnityEngine.AI;
 
+// TODO Stop enemy further from player base in order to prevent overlapping inside it
+
 //questo script controlla i comportamenti dei nemici e lavora assieme allo script Navigazione
 public class Enemy : MonoBehaviour
 {
@@ -39,7 +41,7 @@ public class Enemy : MonoBehaviour
       }
    }
 
-   public virtual void Start()
+   void Start()
    {
       hp = maxHp;
       //path = GameObject.Find("Path " + pathNumber).GetComponent<Path>();
@@ -53,7 +55,7 @@ public class Enemy : MonoBehaviour
 
       //transform.LookAt(path.GetComponent<Path>().Waypoints[0]);
 
-      // Game Manager should assign it when enemies gets spawned but in case it hasen't done yet enemy will find the base itself
+      // Game Manager should assign it when enemies gets spawned but in case it hasn't done yet enemy will find the base itself
       if (!targetBase)
       {
          targetBase = GameObject.Find("Environment/Base").GetComponent<Base>();
