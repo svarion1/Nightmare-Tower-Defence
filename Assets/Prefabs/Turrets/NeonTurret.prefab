@@ -449,12 +449,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8327383353246048817}
-  - component: {fileID: 8327383353246048822}
+  - component: {fileID: 585672205455465209}
   - component: {fileID: 4996132450373462980}
   m_Layer: 0
   m_Name: NeonTurret
   m_TagString: Untagged
-  m_Icon: {fileID: 2800000, guid: efbf52d7ee1264d478d63a17b943941a, type: 3}
+  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -476,7 +476,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8327383353246048822
+--- !u!114 &585672205455465209
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -485,23 +485,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 8327383353246048823}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5191fd597ae554a429c806b7bdb96a08, type: 3}
+  m_Script: {fileID: 11500000, guid: 8aa060835bfa748418a7ea17102aca9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemiesMask:
     serializedVersion: 2
     m_Bits: 64
-  damage: 25
-  attackRange: 8
-  attacksPerSecond: 2
+  damage: 10
+  attackRange: 4
+  attacksPerSecond: 0.8
   cost: 100
   sellPrice: 50
   maxExperience: 300
-  description: 
+  description: 'This turret damages all surrounding enemies. Pros: multiple enemies
+    damaged at the same time Cons: low damage, low range'
   head: {fileID: 2909279809409502860}
   barrel: {fileID: 1488257927179307583}
-  projectile: {fileID: 8334679796980189204, guid: 19fdf82d1c43db64e8fdab5068e449c7,
-    type: 3}
+  projectile: {fileID: 0}
 --- !u!208 &4996132450373462980
 NavMeshObstacle:
   m_ObjectHideFlags: 0
