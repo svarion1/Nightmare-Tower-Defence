@@ -2,18 +2,17 @@ using UnityEngine;
 
 public class ExplosiveProjectile : Projectile
 {
-    public float damageRadius = 3f;
+    public float explosionRadius = 3f;
     public LayerMask enemyLayer;
 
    protected override void OnTriggerEnter(Collider other)
    {
       //Debug.Log("Projectile Collision");
 
+      // Damage every enemy inside explosion radius
       if (other.CompareTag("Enemy"))
       {
-         other.GetComponent<Enemy>().TakeDamage(damage);
-
-         Collider[] colliders = Physics.OverlapSphere(transform.position, damageRadius, enemyLayer) ;
+         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius, enemyLayer) ;
 
          foreach (Collider c in colliders)
          {
@@ -28,6 +27,6 @@ public class ExplosiveProjectile : Projectile
    void OnDrawGizmos()
    {
       Gizmos.color = Color.red;
-      Gizmos.DrawSphere(transform.position, damageRadius);
+      Gizmos.DrawSphere(transform.position, explosionRadius);
    }
 }
