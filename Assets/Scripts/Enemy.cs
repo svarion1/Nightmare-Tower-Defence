@@ -5,6 +5,7 @@ using UnityEngine.AI;
 //questo script controlla i comportamenti dei nemici e lavora assieme allo script Navigazione
 public class Enemy : MonoBehaviour
 {
+   public GameObject FloatingText;
    public float speed = 1.0f;
    [Range(0f, 1f)]
    public float damageReduction = 0f;  // Value between 0 and 1, it defines damage reduction, when it's 0 is full damage, when it's 1 damege taken is completely cancelled
@@ -143,10 +144,17 @@ public class Enemy : MonoBehaviour
       gameManager.OnEnemyKill(this);
       animator.SetTrigger("Dead");
       Destroy(gameObject, animator.GetCurrentAnimatorClipInfo(0)[0].clip.length + 1);
+      ShowFloatingText(droppedResources.ToString());
    }
    private void Attack()
    {
       Debug.Log("Enemy Attack");
       targetBase.TakeDamage(damage);
+   }
+
+   void ShowFloatingText(string text)
+   {
+      GameObject go = Instantiate(FloatingText, transform.position, Quaternion.identity, transform);
+      go.GetComponent<TextMesh>().text = text;
    }
 }

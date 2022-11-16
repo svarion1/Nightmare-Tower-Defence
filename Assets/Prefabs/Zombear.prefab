@@ -152,6 +152,7 @@ GameObject:
   - component: {fileID: 6319003712569662392}
   - component: {fileID: 3810237771567829946}
   - component: {fileID: 1124334104024825529}
+  - component: {fileID: 199859744134425511}
   m_Layer: 6
   m_Name: Zombear
   m_TagString: Enemy
@@ -187,15 +188,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdf5ff6da109e6342846f3698e7c1a3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FloatingText: {fileID: 6615756802435627759, guid: fd9762dcf11361548a3f9e11e51bb36b,
+    type: 3}
   speed: 3
   damageReduction: 0.055
   maxHp: 200
   damage: 25
   attackRange: 2
   attackDelay: 3
-  droppedResources: 20
+  droppedResources: 100
   pathNumber: 1
-  radialHealthBar: {fileID: 2683609492421022003}
 --- !u!136 &3810237771567829946
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -232,6 +234,19 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &199859744134425511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1201099426451397424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f16f99bb284e234b852b32176a0bdd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DestroyTime: 3
 --- !u!1001 &8170140654649694781
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -366,18 +381,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5c9811967d14534a835eb4d06663a3b, type: 3}
---- !u!114 &2683609492421022003 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6078789939275778830, guid: a5c9811967d14534a835eb4d06663a3b,
-    type: 3}
-  m_PrefabInstance: {fileID: 8170140654649694781}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &3771643877250416242 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4987096382970455119, guid: a5c9811967d14534a835eb4d06663a3b,
