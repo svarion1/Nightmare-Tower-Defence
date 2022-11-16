@@ -5,7 +5,7 @@ using UnityEngine.AI;
 //questo script controlla i comportamenti dei nemici e lavora assieme allo script Navigazione
 public class Enemy : MonoBehaviour
 {
-   public GameObject FloatingText;
+   
    public float speed = 1.0f;
    [Range(0f, 1f)]
    public float damageReduction = 0f;  // Value between 0 and 1, it defines damage reduction, when it's 0 is full damage, when it's 1 damege taken is completely cancelled
@@ -18,6 +18,9 @@ public class Enemy : MonoBehaviour
    private float nextAttackDelay;  //contatore del tempo per il prossimo attacco
    public int droppedResources = 20;  //risorse che vengono guadagnate all'uccisione
    public int pathNumber;
+   public GameObject resourcesTextPrefab;
+
+
    //private Path path;
    private bool isDead;
    // UI elements
@@ -144,7 +147,7 @@ public class Enemy : MonoBehaviour
       gameManager.OnEnemyKill(this);
       animator.SetTrigger("Dead");
       Destroy(gameObject, animator.GetCurrentAnimatorClipInfo(0)[0].clip.length + 1);
-      ShowFloatingText(droppedResources.ToString());
+      ShowPopupText(droppedResources.ToString(), Color.green);
    }
    private void Attack()
    {
@@ -152,9 +155,13 @@ public class Enemy : MonoBehaviour
       targetBase.TakeDamage(damage);
    }
 
-   void ShowFloatingText(string text)
+   private void ShowPopupText(string text, Color color)
    {
-      GameObject go = Instantiate(FloatingText, transform.position, Quaternion.identity, transform);
-      go.GetComponent<TextMesh>().text = text;
+      GameObject popupText = Instantiate(resourcesTextPrefab, transform.position, Quaternion.identity);
+      popupText.GetComponent<TextMeshPro>().text = text;
+      popupText.GetComponent<TextMeshPro>().color = color;
+      popupText.GetComponent<PopupText>().SetTarget(transform);
    }
+
+
 }
