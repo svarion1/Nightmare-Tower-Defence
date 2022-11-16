@@ -16,8 +16,7 @@ public class ExplosiveProjectile : Projectile
 
          foreach (Collider c in colliders)
          {
-            if (CompareTag("Enemy"))
-               c.GetComponent<Enemy>().TakeDamage(damage);
+            c.GetComponent<Enemy>().TakeDamage(damage);
          }
 
          Destroy(gameObject);
