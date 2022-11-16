@@ -138,6 +138,7 @@ public class GameManager : MonoBehaviour
    public void OnEnemyKill(Enemy killedEnemy)
    {
       resources += killedEnemy.droppedResources;
+      // TODO update resources UI
    }
 
    public void OnGameOver()
