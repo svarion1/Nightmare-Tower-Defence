@@ -46,11 +46,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92cc4ae9420d7ac43bcf8afb27790f57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 10
   damage: 25
   lifeTime: 4
   target: {fileID: 0}
-  damageRadius: 3
+  explosionRadius: 3
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
