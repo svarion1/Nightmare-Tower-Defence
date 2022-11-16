@@ -47,12 +47,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  damage: 10
+  damage: 8
   lifeTime: 4
   target: {fileID: 0}
   duration: 3
-  tickDuration: 1
-  tickDamage: 10
+  tickDuration: 0.2
+  tickDamage: 4
 --- !u!135 &8334679796980189207
 SphereCollider:
   m_ObjectHideFlags: 0
