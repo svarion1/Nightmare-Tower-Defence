@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AI;
+using TMPro;
 
 //questo script controlla i comportamenti dei nemici e lavora assieme allo script Navigazione
 public class Enemy : MonoBehaviour
 {
+   
    public float speed = 1.0f;
    [Range(0f, 1f)]
    public float damageReduction = 0f;  // Value between 0 and 1, it defines damage reduction, when it's 0 is full damage, when it's 1 damege taken is completely cancelled
@@ -17,6 +19,9 @@ public class Enemy : MonoBehaviour
    private float nextAttackDelay;  //contatore del tempo per il prossimo attacco
    public int droppedResources = 20;  //risorse che vengono guadagnate all'uccisione
    public int pathNumber;
+   public GameObject resourcesTextPrefab;
+
+
    //private Path path;
    private bool isDead;
    // UI elements
@@ -143,10 +148,21 @@ public class Enemy : MonoBehaviour
       gameManager.OnEnemyKill(this);
       animator.SetTrigger("Dead");
       Destroy(gameObject, animator.GetCurrentAnimatorClipInfo(0)[0].clip.length + 1);
+      ShowPopupText(droppedResources.ToString());
    }
    private void Attack()
    {
       Debug.Log("Enemy Attack");
       targetBase.TakeDamage(damage);
    }
+
+   private void ShowPopupText(string text)
+   {
+      GameObject popupText = Instantiate(resourcesTextPrefab, transform.position, Quaternion.identity);
+      popupText.transform.GetChild(0).GetComponent<TextMeshPro>().text = text;
+   
+   
+   }
+
+
 }
