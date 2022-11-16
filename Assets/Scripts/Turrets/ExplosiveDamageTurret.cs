@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AreaDamageTurret : Turret
+public class ExplosiveDamageTurret : Turret
 {
     protected override void NextAttackUpdate()
     {

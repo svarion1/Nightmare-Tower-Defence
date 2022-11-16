@@ -14,11 +14,11 @@ public class BurningProjectile : Projectile
         if (other.CompareTag("Enemy"))
         {
             Enemy enemy = other.GetComponent<Enemy>();
-            ContinuousDamage cd = enemy.GetComponent<ContinuousDamage>();
+            ContinuousDamageEffect cd = enemy.GetComponent<ContinuousDamageEffect>();
             
             if (cd == null)
             {
-              cd = enemy.AddComponent<ContinuousDamage>();
+              cd = enemy.AddComponent<ContinuousDamageEffect>();
             }
 
             cd.duration = duration;

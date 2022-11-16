@@ -1,31 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ContinuousDamage : MonoBehaviour
+// Effect base class can't be added as component cause it's abstract
+public abstract class Effect : MonoBehaviour
 {
     public float duration;
     public float tickDuration;
-    public float tickDamage;
 
-    public float nextTick;
-    private Enemy attachedEnemy;
+    protected float nextTick;
+    protected Enemy attachedEnemy;
     
-    void Start ()
+    protected void Start ()
     {
         nextTick = tickDuration;
         attachedEnemy = GetComponent<Enemy>();
     }
     
-    void Update () {
+    protected void Update () {
         duration -= Time.deltaTime;
         if (duration >0)
         {
             nextTick -= Time.deltaTime;
             if(nextTick <= 0)
             {
-                Debug.Log("Tick");
-                attachedEnemy.TakeDamage(tickDamage);
+                Debug.Log("Effect Tick");
+                ApplyEffect();
                 nextTick = tickDuration;
             }
         }
@@ -34,4 +32,6 @@ public class ContinuousDamage : MonoBehaviour
             Destroy(this);
         }
     }
+
+    protected abstract void ApplyEffect();
 }
